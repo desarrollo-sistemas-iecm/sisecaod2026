@@ -1,0 +1,15 @@
+2026-06-12 13:19:32 [error]: [GET] /api/v1/catalogo — The multi-part identifier "a.clave" could not be bound.
+2026-06-12 13:19:36 [error]: [GET] /api/v1/catalogo — The multi-part identifier "a.clave" could not be bound.
+2026-07-06 13:02:45 [error]: [POST] /api/v1/catalogo/importar — ENOENT: no such file or directory, open 'C:\xampp\htdocs\2026\daod2026\backend\uploads\cat_1783364565832.xls'
+2026-07-06 14:45:55 [error]: [POST] /api/v1/catalogo/importar — Transaction has been aborted.
+2026-07-06 14:46:29 [error]: [POST] /api/v1/catalogo/importar — Transaction has been aborted.
+2026-07-06 15:53:29 [error]: [POST] /api/v1/catalogo/importar — The incoming tabular data stream (TDS) remote procedure call (RPC) protocol stream is incorrect. Parameter 8 ("@soporte"): Data type 0xA7 has an invalid data length or metadata length.
+2026-07-07 16:02:42 [error]: [GET] /api/v1/reportes/avance-grafica?anio=2025&distrito=todos — Timeout: Request failed to complete in 15000ms
+2026-07-07 16:02:57 [error]: [GET] /api/v1/reportes/avance-grafica?anio=2025&distrito=todos — Timeout: Request failed to complete in 15000ms
+2026-07-07 16:03:12 [error]: [GET] /api/v1/reportes/avance-grafica?anio=2025&distrito=todos — Timeout: Request failed to complete in 15000ms
+2026-07-07 16:03:25 [error]: [GET] /api/v1/reportes/avance-grafica?anio=2025&distrito=todos — Timeout: Request failed to complete in 15000ms
+2026-07-08 14:09:47 [error]: [POST] /api/v1/usuarios — String or binary data would be truncated.
+2026-07-08 14:10:50 [error]: [POST] /api/v1/usuarios — String or binary data would be truncated.
+2026-07-08 14:12:23 [error]: [POST] /api/v1/usuarios — String or binary data would be truncated.
+2026-07-08 14:22:40 [error]: [PUT] /api/v1/unidades/11 — String or binary data would be truncated.
+2026-07-08 14:22:47 [error]: [PUT] /api/v1/unidades/11 — String or binary data would be truncated.

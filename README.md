@@ -1,4 +1,4 @@
-# 📚 DAOD2026 – Sistema de Gestión de Actividades y Catálogo
+#  DAOD2026 – Sistema de Gestión de Actividades y Catálogo
 
 ## Índice
 - [Visión General](#visión-general)
@@ -236,4 +236,4 @@ Este proyecto está bajo la **Licencia MIT**. Consulte el archivo `LICENSE` para
 
 ---
 
-*Generado automáticamente por Antigravity, el asistente de IA especializado en desarrollo de aplicaciones web.*
+*Generado por Bruno Corona Ing. especializado en desarrollo de aplicaciones web.*

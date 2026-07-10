@@ -44,7 +44,7 @@ const perfil    = computed(() => PERFILES[authStore.perfil] ?? `Perfil ${authSto
     <div class="flex items-center gap-4">
       <button
         @click="ui.toggleSidebar()"
-        class="p-2 rounded-xl text-slate-400 hover:bg-slate-100 hover:text-iecm-purple dark:hover:bg-slate-800 dark:hover:text-iecm-purple-light transition-all duration-200"
+        class="lg:hidden p-2 rounded-xl text-slate-400 hover:bg-slate-100 hover:text-iecm-purple dark:hover:bg-slate-800 dark:hover:text-iecm-purple-light transition-all duration-200"
         title="Alternar sidebar"
       >
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -156,8 +156,10 @@ const handleSubmit = async () => {
         <div
           class="col-span-1 lg:col-span-5 flex flex-col justify-between p-8 lg:p-12"
           style="
-            background: #100E25;
-            border-left: 1px solid rgba(255,255,255,0.05);
+            background: rgba(255, 255, 255, 0.16);
+            border-left: 1px solid rgba(255, 255, 255, 0.20);
+            backdrop-filter: blur(20px);
+            box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.10);
           "
         >
           <!-- Encabezado del formulario -->
@@ -181,7 +183,7 @@ const handleSubmit = async () => {
             <div class="lp-field">
               <label
                 for="login-usuario"
-                class="block text-[10px] font-bold uppercase tracking-[0.14em] text-white/40 mb-2"
+                class="block text-[10px] font-bold uppercase tracking-[0.14em] text-white/60 mb-2"
               >
                 Usuario
               </label>
@@ -201,17 +203,17 @@ const handleSubmit = async () => {
                   type="text"
                   placeholder="Ej. dtto01"
                   autocomplete="off"
-                  class="w-full text-white text-[13px] placeholder-white/20
+                  class="w-full text-white text-[13px] placeholder-white/35
                          px-4 py-2.5 pl-10 rounded-xl outline-none
                          transition-shadow duration-200"
                   style="
-                    background: rgba(255,255,255,0.04);
-                    border: 1px solid rgba(255,255,255,0.09);
+                    background: rgba(13, 11, 30, 0.50);
+                    border: 1px solid rgba(255, 255, 255, 0.08);
                   "
                   @focus="($event.target as HTMLInputElement).style.cssText +=
-                    'border-color:rgba(109,40,217,0.7);box-shadow:0 0 0 3px rgba(109,40,217,0.12)'"
+                    'border-color:rgba(123,79,191,0.7);box-shadow:0 0 0 3px rgba(123,79,191,0.2)'"
                   @blur="($event.target as HTMLInputElement).style.cssText =
-                    'background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09)'"
+                    'background:rgba(13,11,30,0.50);border:1px solid rgba(255,255,255,0.08)'"
                 />
               </div>
             </div>
@@ -220,7 +222,7 @@ const handleSubmit = async () => {
             <div class="lp-field">
               <label
                 for="login-contrasena"
-                class="block text-[10px] font-bold uppercase tracking-[0.14em] text-white/40 mb-2"
+                class="block text-[10px] font-bold uppercase tracking-[0.14em] text-white/60 mb-2"
               >
                 Contraseña
               </label>
@@ -241,17 +243,17 @@ const handleSubmit = async () => {
                   :type="showPwd ? 'text' : 'password'"
                   placeholder="Tu contraseña"
                   autocomplete="new-password"
-                  class="w-full text-white text-[13px] placeholder-white/20
+                  class="w-full text-white text-[13px] placeholder-white/35
                          px-4 py-2.5 pl-10 pr-11 rounded-xl outline-none
                          transition-shadow duration-200"
                   style="
-                    background: rgba(255,255,255,0.04);
-                    border: 1px solid rgba(255,255,255,0.09);
+                    background: rgba(13, 11, 30, 0.50);
+                    border: 1px solid rgba(255, 255, 255, 0.08);
                   "
                   @focus="($event.target as HTMLInputElement).style.cssText +=
-                    'border-color:rgba(109,40,217,0.7);box-shadow:0 0 0 3px rgba(109,40,217,0.12)'"
+                    'border-color:rgba(123,79,191,0.7);box-shadow:0 0 0 3px rgba(123,79,191,0.2)'"
                   @blur="($event.target as HTMLInputElement).style.cssText =
-                    'background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09)'"
+                    'background:rgba(13,11,30,0.50);border:1px solid rgba(255,255,255,0.08)'"
                 />
                 <button
                   type="button"
@@ -304,7 +306,7 @@ const handleSubmit = async () => {
           </form>
 
           <!-- Footer dentro del panel derecho -->
-          <p class="lp-footer text-[10px] text-white/20 leading-relaxed tracking-wide">
+          <p class="lp-footer text-[10px] text-white/20 leading-relaxed tracking-wide text-center">
             Instituto Electoral de la Ciudad de México &copy; {{ anioActual }}<br />
             Todos los derechos reservados.
           </p>

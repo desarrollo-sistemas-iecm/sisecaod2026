@@ -146,6 +146,20 @@ const initials = computed(() => {
           <img v-else src="@/assets/logos/logo-white.svg" alt="IECM Logo" class="w-full h-full object-contain drop-shadow-md" />
         </div>
       </div>
+
+      <!-- Toggle Collapse Button (Desktop) -->
+      <button 
+        @click="ui.toggleSidebar()"
+        class="hidden lg:flex absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 bg-blue-400 border border-blue-300 text-white rounded-full items-center justify-center shadow-[0_0_10px_rgba(96,165,250,0.5)] hover:bg-white hover:text-blue-500 hover:border-transparent transition-all z-50 cursor-pointer animate-fade-in"
+        title="Alternar sidebar"
+      >
+        <svg v-if="ui.sidebarOpen" class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
+        </svg>
+        <svg v-else class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
     </div>
 
     <!-- ── Periodo badge ── -->

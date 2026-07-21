@@ -1843,3 +1843,128 @@
 2026-07-10 15:31:29 [info]: ⏰ Inicio       : 2026-07-10 21:31:29
 2026-07-10 15:31:29 [info]: ══════════════════════════════════════════
 2026-07-10 15:33:42 [info]: Login exitoso: usuario=admin perfil=1
+2026-07-20 16:00:38 [debug]: Pool de conexión creado: utalaod @ 145.0.40.72
+2026-07-20 16:00:38 [info]: 🔧 Estructura de BD verificada: columna contrasena ajustada a VARCHAR(100)
+2026-07-20 16:00:38 [info]: ╔══════════════════════════════════════╗
+2026-07-20 16:00:38 [info]: ║       SISECAOD 2026 — Backend API    ║
+2026-07-20 16:00:38 [info]: ╚══════════════════════════════════════╝
+2026-07-20 16:00:38 [info]: 🌐 Ambiente     : development
+2026-07-20 16:00:38 [info]: 🚀 Servidor     : http://localhost:3000
+2026-07-20 16:00:38 [info]: 📦 Base de datos: utalaod @ 145.0.40.72
+2026-07-20 16:00:38 [info]: ✅ Conexión BD  : Exitosa
+2026-07-20 16:00:38 [info]: 📋 Versión API  : v1
+2026-07-20 16:00:38 [info]: ⏰ Inicio       : 2026-07-20 22:00:38
+2026-07-20 16:00:38 [info]: ══════════════════════════════════════════
+2026-07-20 16:00:54 [info]: Login exitoso: usuario=admin perfil=1
+2026-07-20 16:11:43 [info]: Login exitoso: usuario=dist1_2 perfil=3
+2026-07-20 16:22:31 [info]: Login exitoso: usuario=ADMIN perfil=1
+2026-07-20 16:37:51 [debug]: Pool de conexión creado: utalaod @ 145.0.40.72
+2026-07-20 16:37:51 [info]: 🔧 Estructura de BD verificada: columna contrasena ajustada a VARCHAR(100)
+2026-07-20 16:37:51 [info]: ╔══════════════════════════════════════╗
+2026-07-20 16:37:51 [info]: ║       SISECAOD 2026 — Backend API    ║
+2026-07-20 16:37:51 [info]: ╚══════════════════════════════════════╝
+2026-07-20 16:37:51 [info]: 🌐 Ambiente     : development
+2026-07-20 16:37:51 [info]: 🚀 Servidor     : http://localhost:3000
+2026-07-20 16:37:51 [info]: 📦 Base de datos: utalaod @ 145.0.40.72
+2026-07-20 16:37:51 [info]: ✅ Conexión BD  : Exitosa
+2026-07-20 16:37:51 [info]: 📋 Versión API  : v1
+2026-07-20 16:37:51 [info]: ⏰ Inicio       : 2026-07-20 22:37:51
+2026-07-20 16:37:51 [info]: ══════════════════════════════════════════
+2026-07-20 16:50:06 [info]: Login exitoso: usuario=dist3_2 perfil=3
+2026-07-20 16:52:11 [info]: Login exitoso: usuario=ADMIN perfil=1
+2026-07-20 16:59:10 [debug]: Pool de conexión creado: utalaod @ 145.0.40.72
+2026-07-20 16:59:10 [info]: 🔧 Estructura de BD verificada: columna contrasena ajustada a VARCHAR(100)
+2026-07-20 16:59:10 [info]: ╔══════════════════════════════════════╗
+2026-07-20 16:59:10 [info]: ║       SISECAOD 2026 — Backend API    ║
+2026-07-20 16:59:10 [info]: ╚══════════════════════════════════════╝
+2026-07-20 16:59:10 [info]: 🌐 Ambiente     : development
+2026-07-20 16:59:10 [info]: 🚀 Servidor     : http://localhost:3000
+2026-07-20 16:59:10 [info]: 📦 Base de datos: utalaod @ 145.0.40.72
+2026-07-20 16:59:10 [info]: ✅ Conexión BD  : Exitosa
+2026-07-20 16:59:10 [info]: 📋 Versión API  : v1
+2026-07-20 16:59:10 [info]: ⏰ Inicio       : 2026-07-20 22:59:10
+2026-07-20 16:59:10 [info]: ══════════════════════════════════════════
+2026-07-20 17:00:36 [debug]: Pool de conexión creado: utalaod @ 145.0.40.72
+2026-07-20 17:00:36 [info]: 🔧 Estructura de BD verificada: columna contrasena ajustada a VARCHAR(100)
+2026-07-20 17:00:36 [info]: ╔══════════════════════════════════════╗
+2026-07-20 17:00:36 [info]: ║       SISECAOD 2026 — Backend API    ║
+2026-07-20 17:00:36 [info]: ╚══════════════════════════════════════╝
+2026-07-20 17:00:36 [info]: 🌐 Ambiente     : development
+2026-07-20 17:00:36 [info]: 🚀 Servidor     : http://localhost:3000
+2026-07-20 17:00:36 [info]: 📦 Base de datos: utalaod @ 145.0.40.72
+2026-07-20 17:00:36 [info]: ✅ Conexión BD  : Exitosa
+2026-07-20 17:00:36 [info]: 📋 Versión API  : v1
+2026-07-20 17:00:36 [info]: ⏰ Inicio       : 2026-07-20 23:00:36
+2026-07-20 17:00:36 [info]: ══════════════════════════════════════════
+2026-07-20 17:04:32 [debug]: Pool de conexión creado: utalaod @ 145.0.40.72
+2026-07-20 17:04:32 [info]: 🔧 Estructura de BD verificada: columna contrasena ajustada a VARCHAR(100)
+2026-07-20 17:04:32 [info]: ╔══════════════════════════════════════╗
+2026-07-20 17:04:32 [info]: ║       SISECAOD 2026 — Backend API    ║
+2026-07-20 17:04:32 [info]: ╚══════════════════════════════════════╝
+2026-07-20 17:04:32 [info]: 🌐 Ambiente     : development
+2026-07-20 17:04:32 [info]: 🚀 Servidor     : http://localhost:3000
+2026-07-20 17:04:32 [info]: 📦 Base de datos: utalaod @ 145.0.40.72
+2026-07-20 17:04:32 [info]: ✅ Conexión BD  : Exitosa
+2026-07-20 17:04:32 [info]: 📋 Versión API  : v1
+2026-07-20 17:04:32 [info]: ⏰ Inicio       : 2026-07-20 23:04:32
+2026-07-20 17:04:32 [info]: ══════════════════════════════════════════
+2026-07-20 17:05:03 [debug]: Pool de conexión creado: utalaod @ 145.0.40.72
+2026-07-20 17:05:03 [info]: 🔧 Estructura de BD verificada: columna contrasena ajustada a VARCHAR(100)
+2026-07-20 17:05:03 [info]: ╔══════════════════════════════════════╗
+2026-07-20 17:05:03 [info]: ║       SISECAOD 2026 — Backend API    ║
+2026-07-20 17:05:03 [info]: ╚══════════════════════════════════════╝
+2026-07-20 17:05:03 [info]: 🌐 Ambiente     : development
+2026-07-20 17:05:03 [info]: 🚀 Servidor     : http://localhost:3000
+2026-07-20 17:05:03 [info]: 📦 Base de datos: utalaod @ 145.0.40.72
+2026-07-20 17:05:03 [info]: ✅ Conexión BD  : Exitosa
+2026-07-20 17:05:03 [info]: 📋 Versión API  : v1
+2026-07-20 17:05:03 [info]: ⏰ Inicio       : 2026-07-20 23:05:03
+2026-07-20 17:05:03 [info]: ══════════════════════════════════════════
+2026-07-20 17:05:12 [debug]: Pool de conexión creado: utalaod @ 145.0.40.72
+2026-07-20 17:05:12 [info]: 🔧 Estructura de BD verificada: columna contrasena ajustada a VARCHAR(100)
+2026-07-20 17:05:12 [info]: ╔══════════════════════════════════════╗
+2026-07-20 17:05:12 [info]: ║       SISECAOD 2026 — Backend API    ║
+2026-07-20 17:05:12 [info]: ╚══════════════════════════════════════╝
+2026-07-20 17:05:12 [info]: 🌐 Ambiente     : development
+2026-07-20 17:05:12 [info]: 🚀 Servidor     : http://localhost:3000
+2026-07-20 17:05:12 [info]: 📦 Base de datos: utalaod @ 145.0.40.72
+2026-07-20 17:05:12 [info]: ✅ Conexión BD  : Exitosa
+2026-07-20 17:05:12 [info]: 📋 Versión API  : v1
+2026-07-20 17:05:12 [info]: ⏰ Inicio       : 2026-07-20 23:05:12
+2026-07-20 17:05:12 [info]: ══════════════════════════════════════════
+2026-07-20 17:05:56 [debug]: Pool de conexión creado: utalaod @ 145.0.40.72
+2026-07-20 17:05:56 [info]: 🔧 Estructura de BD verificada: columna contrasena ajustada a VARCHAR(100)
+2026-07-20 17:05:56 [info]: ╔══════════════════════════════════════╗
+2026-07-20 17:05:56 [info]: ║       SISECAOD 2026 — Backend API    ║
+2026-07-20 17:05:56 [info]: ╚══════════════════════════════════════╝
+2026-07-20 17:05:56 [info]: 🌐 Ambiente     : development
+2026-07-20 17:05:56 [info]: 🚀 Servidor     : http://localhost:3000
+2026-07-20 17:05:56 [info]: 📦 Base de datos: utalaod @ 145.0.40.72
+2026-07-20 17:05:56 [info]: ✅ Conexión BD  : Exitosa
+2026-07-20 17:05:56 [info]: 📋 Versión API  : v1
+2026-07-20 17:05:56 [info]: ⏰ Inicio       : 2026-07-20 23:05:56
+2026-07-20 17:05:56 [info]: ══════════════════════════════════════════
+2026-07-20 17:07:15 [debug]: Pool de conexión creado: utalaod @ 145.0.40.72
+2026-07-20 17:07:15 [info]: 🔧 Estructura de BD verificada: columna contrasena ajustada a VARCHAR(100)
+2026-07-20 17:07:15 [info]: ╔══════════════════════════════════════╗
+2026-07-20 17:07:15 [info]: ║       SISECAOD 2026 — Backend API    ║
+2026-07-20 17:07:15 [info]: ╚══════════════════════════════════════╝
+2026-07-20 17:07:15 [info]: 🌐 Ambiente     : development
+2026-07-20 17:07:15 [info]: 🚀 Servidor     : http://localhost:3000
+2026-07-20 17:07:15 [info]: 📦 Base de datos: utalaod @ 145.0.40.72
+2026-07-20 17:07:15 [info]: ✅ Conexión BD  : Exitosa
+2026-07-20 17:07:15 [info]: 📋 Versión API  : v1
+2026-07-20 17:07:15 [info]: ⏰ Inicio       : 2026-07-20 23:07:15
+2026-07-20 17:07:15 [info]: ══════════════════════════════════════════
+2026-07-20 17:13:53 [debug]: Pool de conexión creado: utalaod @ 145.0.40.72
+2026-07-20 17:13:53 [info]: 🔧 Estructura de BD verificada: columna contrasena ajustada a VARCHAR(100)
+2026-07-20 17:13:53 [info]: ╔══════════════════════════════════════╗
+2026-07-20 17:13:53 [info]: ║       SISECAOD 2026 — Backend API    ║
+2026-07-20 17:13:53 [info]: ╚══════════════════════════════════════╝
+2026-07-20 17:13:53 [info]: 🌐 Ambiente     : development
+2026-07-20 17:13:53 [info]: 🚀 Servidor     : http://localhost:3000
+2026-07-20 17:13:53 [info]: 📦 Base de datos: utalaod @ 145.0.40.72
+2026-07-20 17:13:53 [info]: ✅ Conexión BD  : Exitosa
+2026-07-20 17:13:53 [info]: 📋 Versión API  : v1
+2026-07-20 17:13:53 [info]: ⏰ Inicio       : 2026-07-20 23:13:53
+2026-07-20 17:13:53 [info]: ══════════════════════════════════════════

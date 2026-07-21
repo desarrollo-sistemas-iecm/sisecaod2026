@@ -149,13 +149,15 @@ const generarDistrito = async ({ mes, anio, idDistrito }) => {
 }
 
 const generarPendientes = async ({ mes, anio, idDistrito }) => {
-  const mesActivo = mes ?? await getMesActivo()
-  const mesNombre = MESES_ES[mesActivo] ?? ''
+  const mesActivo   = mes ?? await getMesActivo()
+  const mesNombre   = MESES_ES[mesActivo] ?? ''
+  // idDistrito es null para admin/central; solo filtrar si es un distrito válido (1-33)
+  const esDistrito  = Number.isInteger(idDistrito) && idDistrito > 0 && idDistrito <= 33
   const params = {
     mes:  { type: sql.Int, value: mesActivo },
     anio: { type: sql.Int, value: anio },
   }
-  if (idDistrito <= 33) params.idDistrito = { type: sql.Int, value: idDistrito }
+  if (esDistrito) params.idDistrito = { type: sql.Int, value: idDistrito }
 
   const result = await query(
     `SELECT DISTINCT 
@@ -165,10 +167,13 @@ const generarPendientes = async ({ mes, anio, idDistrito }) => {
      FROM (SELECT DISTINCT iddistrito FROM sisecao_usuarios WHERE iddistrito <> 99 AND status = 1) AS U
      CROSS JOIN sisecao_catactividad AS A
      WHERE A.status = 1 AND A.mes = @mes AND A.ano = @anio
-       ${idDistrito <= 33 ? 'AND U.iddistrito = @idDistrito' : ''}
+       ${esDistrito ? 'AND U.iddistrito = @idDistrito' : ''}
        AND NOT EXISTS (
          SELECT 1 FROM sisecao_actividades_trabajo AS T
-         WHERE T.iddistrito = U.iddistrito AND T.id_actividad = A.id_actividad
+         WHERE T.iddistrito = U.iddistrito
+           AND T.clave = A.clave
+           AND T.mes = A.mes
+           AND T.ano = A.ano
        )
      ORDER BY U.iddistrito, A.clave`,
     params
@@ -207,8 +212,8 @@ const generarPendientes = async ({ mes, anio, idDistrito }) => {
 
   // Cabecera de la tabla en Fila 10
   const headers = [
-    'DISTRITO QUE FALTA POR CAPTUROR', 'DISTRITO', 'AREA', 'CONSECUTIVO', 'CLAVE COMPLETA',
-    'ACTIVIDAD', 'PERIODO DE INICIO', 'PERIO DE TERMINO', 'RESPONSABLE',
+    'DISTRITO QUE FALTA POR CAPTURAR', 'DISTRITO', 'AREA', 'CONSECUTIVO', 'CLAVE COMPLETA',
+    'ACTIVIDAD', 'PERIODO DE INICIO', 'PERIODO DE TERMINO', 'RESPONSABLE',
     'SOPORTE DE DOCUMENTO', 'TIPO DE ACTIVIDAD'
   ]
   const hRow = ws.getRow(10)

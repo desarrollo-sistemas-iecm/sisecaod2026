@@ -13,3 +13,5 @@
 2026-07-08 14:12:23 [error]: [POST] /api/v1/usuarios — String or binary data would be truncated.
 2026-07-08 14:22:40 [error]: [PUT] /api/v1/unidades/11 — String or binary data would be truncated.
 2026-07-08 14:22:47 [error]: [PUT] /api/v1/unidades/11 — String or binary data would be truncated.
+2026-07-22 15:38:49 [ERROR] ❌ [GET] /api/v1/catalogo — The multi-part identifier "a.clave" could not be bound.
+2026-07-22 15:38:49 [ERROR] ❌ [GET] /api/v1/catalogo — The multi-part identifier "a.clave" could not be bound.

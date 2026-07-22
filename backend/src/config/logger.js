@@ -108,26 +108,56 @@ const logger = createLogger({
 /** 🟢 Login / Logout / Sesión */
 const logSession = (message) => {
   logger.info(message, { category: 'session' })
+  try {
+    const { registrarEvento } = require('../services/telegram.service')
+    registrarEvento('sesiones', message)
+  } catch (err) {
+    console.error('Error al registrar sesión en Telegram:', err.message)
+  }
 }
 
 /** 🔵 Captura / Guardado / Modificación de datos */
 const logAction = (message) => {
   logger.info(message, { category: 'action' })
+  try {
+    const { registrarEvento } = require('../services/telegram.service')
+    registrarEvento('capturas')
+  } catch (err) {
+    console.error('Error al registrar acción en Telegram:', err.message)
+  }
 }
 
 /** 🔵 Consulta de datos (lectura) */
 const logQuery = (message) => {
   logger.info(message, { category: 'query' })
+  try {
+    const { registrarEvento } = require('../services/telegram.service')
+    registrarEvento('consultas')
+  } catch (err) {
+    console.error('Error al registrar consulta en Telegram:', err.message)
+  }
 }
 
 /** 🟡 Advertencia */
 const logWarn = (message) => {
   logger.warn(message, { category: 'warn' })
+  try {
+    const { enviarAlertaWarn } = require('../services/telegram.service')
+    enviarAlertaWarn(message).catch(err => console.error('Error en enviarAlertaWarn:', err.message))
+  } catch (err) {
+    console.error('Error al enviar advertencia a Telegram:', err.message)
+  }
 }
 
 /** 🔴 Error */
 const logError = (message) => {
   logger.error(message, { category: 'error' })
+  try {
+    const { enviarAlertaError } = require('../services/telegram.service')
+    enviarAlertaError(message).catch(err => console.error('Error en enviarAlertaError:', err.message))
+  } catch (err) {
+    console.error('Error al enviar error a Telegram:', err.message)
+  }
 }
 
 /** 🟣 Sistema (arranque, etc.) */

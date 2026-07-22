@@ -1,6 +1,6 @@
 const os = require('os')
 const { connectDb } = require('./config/database')
-const { logger } = require('./config/logger')
+const { logSystem, logError } = require('./config/logger')
 const { env } = require('./config/env')
 const app = require('./app')
 
@@ -29,23 +29,23 @@ const startServer = async () => {
         serverUrl = `http://145.0.40.48:${env.port}/daod2026`
       }
 
-      logger.info('╔══════════════════════════════════════╗')
-      logger.info('║       SISECAOD 2026 — Backend API    ║')
-      logger.info('╚══════════════════════════════════════╝')
-      logger.info(`🌐 Ambiente     : ${env.nodeEnv}`)
-      logger.info(`🚀 Servidor     : ${serverUrl}`)
-      logger.info(`📦 Base de datos: ${env.db.database} @ ${env.db.server}`)
-      logger.info('✅ Conexión BD  : Exitosa')
-      logger.info('📋 Versión API  : v1')
-      logger.info(`⏰ Inicio       : ${new Date().toISOString().replace('T', ' ').slice(0, 19)}`)
-      logger.info('══════════════════════════════════════════')
+      logSystem('╔══════════════════════════════════════╗')
+      logSystem('║       SISECAOD 2026 — Backend API    ║')
+      logSystem('╚══════════════════════════════════════╝')
+      logSystem(`🌐 Ambiente     : ${env.nodeEnv}`)
+      logSystem(`🚀 Servidor     : ${serverUrl}`)
+      logSystem(`📦 Base de datos: ${env.db.database} @ ${env.db.server}`)
+      logSystem('✅ Conexión BD  : Exitosa')
+      logSystem('📋 Versión API  : v1')
+      logSystem(`⏰ Inicio       : ${new Date().toISOString().replace('T', ' ').slice(0, 19)}`)
+      logSystem('══════════════════════════════════════════')
     })
   } catch (error) {
-    logger.error('❌ ERROR DE CONEXIÓN A BASE DE DATOS')
-    logger.error(`   Servidor : ${env.db.server}:${env.db.port}`)
-    logger.error(`   BD       : ${env.db.database}`)
-    logger.error(`   Error    : ${error.message}`)
-    logger.error('   >> Revisa tus variables de entorno y acceso al servidor SQL.')
+    logError('❌ ERROR DE CONEXIÓN A BASE DE DATOS')
+    logError(`   Servidor : ${env.db.server}:${env.db.port}`)
+    logError(`   BD       : ${env.db.database}`)
+    logError(`   Error    : ${error.message}`)
+    logError('   >> Revisa tus variables de entorno y acceso al servidor SQL.')
     process.exit(1)
   }
 }

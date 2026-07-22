@@ -27,6 +27,53 @@ const isCaptureUser   = computed(() => auth.perfil === 3)
 const kpiAvance = ref({ total: 0, capturadas: 0, pct: 0, loading: true })
 const kpiDias   = ref({ restantes: 0, pct: 0, vencido: false, label: '' })
 
+/* ── KPI Resumen SI / NO ── */
+const kpiResumen = ref({ total: 0, si: 0, no: 0, pctSi: 0, pctNo: 0, loading: true })
+const circleResumenSi = ref<SVGElement | null>(null)
+const circleResumenNo = ref<SVGElement | null>(null)
+
+const fetchResumenCaptura = async () => {
+  if (!isCentralAdmin.value && !isReadOnly.value) {
+    kpiResumen.value.loading = false
+    return
+  }
+  kpiResumen.value.loading = true
+  try {
+    const res = await api.get('/reportes/resumen-captura')
+    const { total, si, no } = res.data.data || {}
+    kpiResumen.value.total = total ?? 0
+    kpiResumen.value.si = si ?? 0
+    kpiResumen.value.no = no ?? 0
+    kpiResumen.value.pctSi = total > 0 ? (si / total) * 100 : 0
+    kpiResumen.value.pctNo = total > 0 ? (no / total) * 100 : 0
+  } catch (err) {
+    console.error('Error fetching resumen captura:', err)
+  } finally {
+    kpiResumen.value.loading = false
+    animarResumenRadials()
+  }
+}
+
+const animarResumenRadials = () => {
+  nextTick(() => {
+    const circ = 2 * Math.PI * 54
+    if (circleResumenSi.value) {
+      const offset = circ - (kpiResumen.value.pctSi / 100) * circ
+      gsap.fromTo(circleResumenSi.value,
+        { strokeDashoffset: circ },
+        { strokeDashoffset: offset, duration: 1.5, ease: 'power3.out' }
+      )
+    }
+    if (circleResumenNo.value) {
+      const offset = circ - (kpiResumen.value.pctNo / 100) * circ
+      gsap.fromTo(circleResumenNo.value,
+        { strokeDashoffset: circ },
+        { strokeDashoffset: offset, duration: 1.5, ease: 'power3.out' }
+      )
+    }
+  })
+}
+
 const getKpiDiasColor = computed(() => {
   const p = kpiDias.value.pct
   if (p <= 21) return { gradient: 'url(#gradRojo)', shadow: 'rgba(239,68,68,0.5)', textClass: 'text-red-500' }
@@ -211,6 +258,7 @@ const initHighcharts = async () => {
   try {
     loadingChart.value = true
     fetchGlobalKPIs() // Fetch KPIs together with charts
+    fetchResumenCaptura() // Fetch SI/NO summary
     await loadScript('https://code.highcharts.com/highcharts.js')
     await loadScript('https://code.highcharts.com/modules/drilldown.js')
     await renderGrafica()
@@ -437,6 +485,8 @@ onMounted(async () => {
     })
   }
   await initHighcharts()
+  // For read-only users (perfil 2), fetch resumen independently since initHighcharts skips them
+  if (isReadOnly.value) fetchResumenCaptura()
 })
 
 onUnmounted(() => {
@@ -728,6 +778,135 @@ const quickLinks = computed(() => {
           <div class="text-center border-l border-slate-100 dark:border-white/10">
             <p class="text-[10px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-wider mb-1">Restantes</p>
             <p class="text-xs font-bold" :class="kpiDias.vencido ? 'text-red-500' : 'text-blue-500 dark:text-blue-400'">{{ kpiDias.restantes }} <span class="text-[10px] opacity-70 font-normal">días</span></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- KPI 3: Resumen SI / NO Realizadas -->
+      <div
+        v-if="isCentralAdmin || isReadOnly"
+        class="md:col-span-2 relative flex flex-col items-center justify-center p-8 rounded-3xl overflow-hidden bg-white dark:bg-[#0B1120] border border-iecm-purple/15 dark:border-white/5 shadow-iecm dark:shadow-[0_20px_40px_rgba(0,0,0,0.4)] transition-colors duration-200"
+      >
+        <h3 class="text-slate-500 dark:text-white/60 text-xs font-bold uppercase tracking-[0.15em] mb-6">
+          Resumen de Actividades Capturadas
+        </h3>
+
+        <!-- Loading -->
+        <div v-if="kpiResumen.loading" class="flex items-center justify-center py-8">
+          <div class="w-10 h-10 border-[3px] border-slate-100 dark:border-slate-700 border-t-iecm-purple rounded-full animate-spin"></div>
+        </div>
+
+        <!-- Radials -->
+        <div v-else class="flex flex-col sm:flex-row items-center justify-center gap-10 sm:gap-16 w-full">
+
+          <!-- Radial SI Realizadas -->
+          <div class="flex flex-col items-center">
+            <div class="relative flex items-center justify-center w-36 h-36">
+              <!-- Background track -->
+              <svg class="w-full h-full transform -rotate-90" viewBox="0 0 120 120">
+                <circle cx="60" cy="60" r="54" fill="none" class="stroke-emerald-100 dark:stroke-emerald-950/30" stroke-width="8" />
+              </svg>
+              <!-- Animated progress -->
+              <svg class="absolute inset-0 w-full h-full transform -rotate-90" viewBox="0 0 120 120">
+                <defs>
+                  <linearGradient id="gradResumenSi" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#34d399" />
+                    <stop offset="100%" stop-color="#10b981" />
+                  </linearGradient>
+                </defs>
+                <circle
+                  ref="circleResumenSi"
+                  cx="60" cy="60" r="54"
+                  fill="none"
+                  stroke="url(#gradResumenSi)"
+                  stroke-width="8"
+                  stroke-linecap="round"
+                  stroke-dasharray="339.292"
+                  stroke-dashoffset="339.292"
+                  style="filter: drop-shadow(0 0 8px rgba(52,211,153,0.35));"
+                />
+              </svg>
+              <!-- Center Text -->
+              <div class="absolute flex flex-col items-center justify-center">
+                <span class="text-2xl font-extrabold text-emerald-600 dark:text-emerald-400 tracking-tighter" style="font-feature-settings: 'tnum';">
+                  {{ Math.round(kpiResumen.pctSi) }}%
+                </span>
+                <span class="text-[10px] text-slate-400 dark:text-white/40 font-semibold uppercase tracking-wider mt-0.5">
+                  Realizadas
+                </span>
+              </div>
+            </div>
+            <!-- Label -->
+            <div class="mt-3 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.5)]"></span>
+              <span class="text-sm font-bold text-slate-700 dark:text-white/80">{{ kpiResumen.si.toLocaleString() }}</span>
+              <span class="text-xs text-slate-400 dark:text-white/40">SI Realizadas</span>
+            </div>
+          </div>
+
+          <!-- Divider -->
+          <div class="hidden sm:block w-px h-28 bg-slate-200 dark:bg-white/10"></div>
+          <div class="sm:hidden w-28 h-px bg-slate-200 dark:bg-white/10"></div>
+
+          <!-- Radial NO Realizadas -->
+          <div class="flex flex-col items-center">
+            <div class="relative flex items-center justify-center w-36 h-36">
+              <!-- Background track -->
+              <svg class="w-full h-full transform -rotate-90" viewBox="0 0 120 120">
+                <circle cx="60" cy="60" r="54" fill="none" class="stroke-rose-100 dark:stroke-rose-950/30" stroke-width="8" />
+              </svg>
+              <!-- Animated progress -->
+              <svg class="absolute inset-0 w-full h-full transform -rotate-90" viewBox="0 0 120 120">
+                <defs>
+                  <linearGradient id="gradResumenNo" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#fb7185" />
+                    <stop offset="100%" stop-color="#f43f5e" />
+                  </linearGradient>
+                </defs>
+                <circle
+                  ref="circleResumenNo"
+                  cx="60" cy="60" r="54"
+                  fill="none"
+                  stroke="url(#gradResumenNo)"
+                  stroke-width="8"
+                  stroke-linecap="round"
+                  stroke-dasharray="339.292"
+                  stroke-dashoffset="339.292"
+                  style="filter: drop-shadow(0 0 8px rgba(244,63,94,0.35));"
+                />
+              </svg>
+              <!-- Center Text -->
+              <div class="absolute flex flex-col items-center justify-center">
+                <span class="text-2xl font-extrabold text-rose-600 dark:text-rose-400 tracking-tighter" style="font-feature-settings: 'tnum';">
+                  {{ Math.round(kpiResumen.pctNo) }}%
+                </span>
+                <span class="text-[10px] text-slate-400 dark:text-white/40 font-semibold uppercase tracking-wider mt-0.5">
+                  No Realizadas
+                </span>
+              </div>
+            </div>
+            <!-- Label -->
+            <div class="mt-3 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-rose-500 shadow-[0_0_6px_rgba(244,63,94,0.5)]"></span>
+              <span class="text-sm font-bold text-slate-700 dark:text-white/80">{{ kpiResumen.no.toLocaleString() }}</span>
+              <span class="text-xs text-slate-400 dark:text-white/40">NO Realizadas</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer Info -->
+        <div class="w-full mt-6 grid grid-cols-3 gap-2 pt-5 border-t border-slate-100 dark:border-white/10">
+          <div class="text-center">
+            <p class="text-[10px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-wider mb-1">Total Capturadas</p>
+            <p class="text-xs font-semibold text-slate-700 dark:text-white/80">{{ kpiResumen.total.toLocaleString() }}</p>
+          </div>
+          <div class="text-center border-l border-slate-100 dark:border-white/10">
+            <p class="text-[10px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-wider mb-1">SI Realizadas</p>
+            <p class="text-xs font-bold text-emerald-500 dark:text-emerald-400">{{ kpiResumen.si.toLocaleString() }}</p>
+          </div>
+          <div class="text-center border-l border-slate-100 dark:border-white/10">
+            <p class="text-[10px] font-bold text-slate-400 dark:text-white/40 uppercase tracking-wider mb-1">NO Realizadas</p>
+            <p class="text-xs font-bold text-rose-500 dark:text-rose-400">{{ kpiResumen.no.toLocaleString() }}</p>
           </div>
         </div>
       </div>

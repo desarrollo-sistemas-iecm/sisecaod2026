@@ -1,5 +1,6 @@
 const { settingsService } = require('../services/settings.service')
 const { sendSuccess, sendError } = require('../utils/response')
+const { logAction, logQuery, userTag } = require('../config/logger')
 
 const getPeriodoActivo = async (req, res, next) => {
   try {
@@ -42,6 +43,7 @@ const updatePeriodo = async (req, res, next) => {
   try {
      const { mes, anio } = req.body
      await settingsService.updatePeriodo(mes, anio, req.body, req.user.id)
+     logAction(`⚙️  CONFIG periodo mes=${mes} año=${anio} — ${userTag(req.user)}`)
      return sendSuccess(res, null, 'Periodo actualizado correctamente')
   } catch (err) {
     next(err)

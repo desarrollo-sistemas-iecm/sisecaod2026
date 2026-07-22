@@ -1,0 +1,125 @@
+2026-07-22 14:59:56 [DEBUG] Pool de conexión creado: utalaod @ 145.0.40.72
+2026-07-22 14:59:56 [INFO] 🔧 Estructura de BD verificada: columna contrasena ajustada a VARCHAR(100)
+2026-07-22 14:59:56 [INFO] ╔══════════════════════════════════════╗
+2026-07-22 14:59:56 [INFO] ║       SISECAOD 2026 — Backend API    ║
+2026-07-22 14:59:56 [INFO] ╚══════════════════════════════════════╝
+2026-07-22 14:59:56 [INFO] 🌐 Ambiente     : development
+2026-07-22 14:59:56 [INFO] 🚀 Servidor     : http://localhost:3000
+2026-07-22 14:59:56 [INFO] 📦 Base de datos: utalaod @ 145.0.40.72
+2026-07-22 14:59:56 [INFO] ✅ Conexión BD  : Exitosa
+2026-07-22 14:59:56 [INFO] 📋 Versión API  : v1
+2026-07-22 14:59:56 [INFO] ⏰ Inicio       : 2026-07-22 20:59:56
+2026-07-22 14:59:56 [INFO] ══════════════════════════════════════════
+2026-07-22 15:00:14 [DEBUG] Pool de conexión creado: utalaod @ 145.0.40.72
+2026-07-22 15:00:14 [INFO] 🔧 Estructura de BD verificada: columna contrasena ajustada a VARCHAR(100)
+2026-07-22 15:00:14 [SYSTEM] ╔══════════════════════════════════════╗
+2026-07-22 15:00:14 [SYSTEM] ║       SISECAOD 2026 — Backend API    ║
+2026-07-22 15:00:14 [SYSTEM] ╚══════════════════════════════════════╝
+2026-07-22 15:00:14 [SYSTEM] 🌐 Ambiente     : development
+2026-07-22 15:00:14 [SYSTEM] 🚀 Servidor     : http://localhost:3000
+2026-07-22 15:00:14 [SYSTEM] 📦 Base de datos: utalaod @ 145.0.40.72
+2026-07-22 15:00:14 [SYSTEM] ✅ Conexión BD  : Exitosa
+2026-07-22 15:00:14 [SYSTEM] 📋 Versión API  : v1
+2026-07-22 15:00:14 [SYSTEM] ⏰ Inicio       : 2026-07-22 21:00:14
+2026-07-22 15:00:14 [SYSTEM] ══════════════════════════════════════════
+2026-07-22 15:00:32 [DEBUG] Pool de conexión creado: utalaod @ 145.0.40.72
+2026-07-22 15:00:32 [INFO] 🔧 Estructura de BD verificada: columna contrasena ajustada a VARCHAR(100)
+2026-07-22 15:00:32 [SYSTEM] ╔══════════════════════════════════════╗
+2026-07-22 15:00:32 [SYSTEM] ║       SISECAOD 2026 — Backend API    ║
+2026-07-22 15:00:32 [SYSTEM] ╚══════════════════════════════════════╝
+2026-07-22 15:00:32 [SYSTEM] 🌐 Ambiente     : development
+2026-07-22 15:00:32 [SYSTEM] 🚀 Servidor     : http://localhost:3000
+2026-07-22 15:00:32 [SYSTEM] 📦 Base de datos: utalaod @ 145.0.40.72
+2026-07-22 15:00:32 [SYSTEM] ✅ Conexión BD  : Exitosa
+2026-07-22 15:00:32 [SYSTEM] 📋 Versión API  : v1
+2026-07-22 15:00:32 [SYSTEM] ⏰ Inicio       : 2026-07-22 21:00:32
+2026-07-22 15:00:32 [SYSTEM] ══════════════════════════════════════════
+2026-07-22 15:00:46 [DEBUG] Pool de conexión creado: utalaod @ 145.0.40.72
+2026-07-22 15:00:46 [INFO] 🔧 Estructura de BD verificada: columna contrasena ajustada a VARCHAR(100)
+2026-07-22 15:00:46 [SYSTEM] ╔══════════════════════════════════════╗
+2026-07-22 15:00:46 [SYSTEM] ║       SISECAOD 2026 — Backend API    ║
+2026-07-22 15:00:46 [SYSTEM] ╚══════════════════════════════════════╝
+2026-07-22 15:00:46 [SYSTEM] 🌐 Ambiente     : development
+2026-07-22 15:00:46 [SYSTEM] 🚀 Servidor     : http://localhost:3000
+2026-07-22 15:00:46 [SYSTEM] 📦 Base de datos: utalaod @ 145.0.40.72
+2026-07-22 15:00:46 [SYSTEM] ✅ Conexión BD  : Exitosa
+2026-07-22 15:00:46 [SYSTEM] 📋 Versión API  : v1
+2026-07-22 15:00:46 [SYSTEM] ⏰ Inicio       : 2026-07-22 21:00:46
+2026-07-22 15:00:46 [SYSTEM] ══════════════════════════════════════════
+2026-07-22 15:01:03 [DEBUG] Pool de conexión creado: utalaod @ 145.0.40.72
+2026-07-22 15:01:03 [INFO] 🔧 Estructura de BD verificada: columna contrasena ajustada a VARCHAR(100)
+2026-07-22 15:01:03 [SYSTEM] ╔══════════════════════════════════════╗
+2026-07-22 15:01:03 [SYSTEM] ║       SISECAOD 2026 — Backend API    ║
+2026-07-22 15:01:03 [SYSTEM] ╚══════════════════════════════════════╝
+2026-07-22 15:01:03 [SYSTEM] 🌐 Ambiente     : development
+2026-07-22 15:01:03 [SYSTEM] 🚀 Servidor     : http://localhost:3000
+2026-07-22 15:01:03 [SYSTEM] 📦 Base de datos: utalaod @ 145.0.40.72
+2026-07-22 15:01:03 [SYSTEM] ✅ Conexión BD  : Exitosa
+2026-07-22 15:01:03 [SYSTEM] 📋 Versión API  : v1
+2026-07-22 15:01:03 [SYSTEM] ⏰ Inicio       : 2026-07-22 21:01:03
+2026-07-22 15:01:03 [SYSTEM] ══════════════════════════════════════════
+2026-07-22 15:01:36 [DEBUG] Pool de conexión creado: utalaod @ 145.0.40.72
+2026-07-22 15:01:36 [INFO] 🔧 Estructura de BD verificada: columna contrasena ajustada a VARCHAR(100)
+2026-07-22 15:01:36 [SYSTEM] ╔══════════════════════════════════════╗
+2026-07-22 15:01:36 [SYSTEM] ║       SISECAOD 2026 — Backend API    ║
+2026-07-22 15:01:36 [SYSTEM] ╚══════════════════════════════════════╝
+2026-07-22 15:01:36 [SYSTEM] 🌐 Ambiente     : development
+2026-07-22 15:01:36 [SYSTEM] 🚀 Servidor     : http://localhost:3000
+2026-07-22 15:01:36 [SYSTEM] 📦 Base de datos: utalaod @ 145.0.40.72
+2026-07-22 15:01:36 [SYSTEM] ✅ Conexión BD  : Exitosa
+2026-07-22 15:01:36 [SYSTEM] 📋 Versión API  : v1
+2026-07-22 15:01:36 [SYSTEM] ⏰ Inicio       : 2026-07-22 21:01:36
+2026-07-22 15:01:36 [SYSTEM] ══════════════════════════════════════════
+2026-07-22 15:01:52 [DEBUG] Pool de conexión creado: utalaod @ 145.0.40.72
+2026-07-22 15:01:52 [INFO] 🔧 Estructura de BD verificada: columna contrasena ajustada a VARCHAR(100)
+2026-07-22 15:01:52 [SYSTEM] ╔══════════════════════════════════════╗
+2026-07-22 15:01:52 [SYSTEM] ║       SISECAOD 2026 — Backend API    ║
+2026-07-22 15:01:52 [SYSTEM] ╚══════════════════════════════════════╝
+2026-07-22 15:01:52 [SYSTEM] 🌐 Ambiente     : development
+2026-07-22 15:01:52 [SYSTEM] 🚀 Servidor     : http://localhost:3000
+2026-07-22 15:01:52 [SYSTEM] 📦 Base de datos: utalaod @ 145.0.40.72
+2026-07-22 15:01:52 [SYSTEM] ✅ Conexión BD  : Exitosa
+2026-07-22 15:01:52 [SYSTEM] 📋 Versión API  : v1
+2026-07-22 15:01:52 [SYSTEM] ⏰ Inicio       : 2026-07-22 21:01:52
+2026-07-22 15:01:52 [SYSTEM] ══════════════════════════════════════════
+2026-07-22 15:02:03 [DEBUG] Pool de conexión creado: utalaod @ 145.0.40.72
+2026-07-22 15:02:03 [INFO] 🔧 Estructura de BD verificada: columna contrasena ajustada a VARCHAR(100)
+2026-07-22 15:02:03 [SYSTEM] ╔══════════════════════════════════════╗
+2026-07-22 15:02:03 [SYSTEM] ║       SISECAOD 2026 — Backend API    ║
+2026-07-22 15:02:03 [SYSTEM] ╚══════════════════════════════════════╝
+2026-07-22 15:02:03 [SYSTEM] 🌐 Ambiente     : development
+2026-07-22 15:02:03 [SYSTEM] 🚀 Servidor     : http://localhost:3000
+2026-07-22 15:02:03 [SYSTEM] 📦 Base de datos: utalaod @ 145.0.40.72
+2026-07-22 15:02:03 [SYSTEM] ✅ Conexión BD  : Exitosa
+2026-07-22 15:02:03 [SYSTEM] 📋 Versión API  : v1
+2026-07-22 15:02:03 [SYSTEM] ⏰ Inicio       : 2026-07-22 21:02:03
+2026-07-22 15:02:03 [SYSTEM] ══════════════════════════════════════════
+2026-07-22 15:02:13 [DEBUG] Pool de conexión creado: utalaod @ 145.0.40.72
+2026-07-22 15:02:13 [INFO] 🔧 Estructura de BD verificada: columna contrasena ajustada a VARCHAR(100)
+2026-07-22 15:02:13 [SYSTEM] ╔══════════════════════════════════════╗
+2026-07-22 15:02:13 [SYSTEM] ║       SISECAOD 2026 — Backend API    ║
+2026-07-22 15:02:13 [SYSTEM] ╚══════════════════════════════════════╝
+2026-07-22 15:02:13 [SYSTEM] 🌐 Ambiente     : development
+2026-07-22 15:02:13 [SYSTEM] 🚀 Servidor     : http://localhost:3000
+2026-07-22 15:02:13 [SYSTEM] 📦 Base de datos: utalaod @ 145.0.40.72
+2026-07-22 15:02:13 [SYSTEM] ✅ Conexión BD  : Exitosa
+2026-07-22 15:02:13 [SYSTEM] 📋 Versión API  : v1
+2026-07-22 15:02:13 [SYSTEM] ⏰ Inicio       : 2026-07-22 21:02:13
+2026-07-22 15:02:13 [SYSTEM] ══════════════════════════════════════════
+2026-07-22 15:02:25 [DEBUG] Pool de conexión creado: utalaod @ 145.0.40.72
+2026-07-22 15:02:25 [INFO] 🔧 Estructura de BD verificada: columna contrasena ajustada a VARCHAR(100)
+2026-07-22 15:02:25 [SYSTEM] ╔══════════════════════════════════════╗
+2026-07-22 15:02:25 [SYSTEM] ║       SISECAOD 2026 — Backend API    ║
+2026-07-22 15:02:25 [SYSTEM] ╚══════════════════════════════════════╝
+2026-07-22 15:02:25 [SYSTEM] 🌐 Ambiente     : development
+2026-07-22 15:02:25 [SYSTEM] 🚀 Servidor     : http://localhost:3000
+2026-07-22 15:02:25 [SYSTEM] 📦 Base de datos: utalaod @ 145.0.40.72
+2026-07-22 15:02:25 [SYSTEM] ✅ Conexión BD  : Exitosa
+2026-07-22 15:02:25 [SYSTEM] 📋 Versión API  : v1
+2026-07-22 15:02:25 [SYSTEM] ⏰ Inicio       : 2026-07-22 21:02:25
+2026-07-22 15:02:25 [SYSTEM] ══════════════════════════════════════════
+2026-07-22 15:02:52 [QUERY] 📊 Consulta resumen SI/NO — [id=20015 | Central | clave=07]
+2026-07-22 15:04:05 [SESSION] 🟢 LOGIN  ➜  Central - DEOEyG (central5) — Central | clave=07 — IP: ::1
+2026-07-22 15:04:06 [QUERY] 📊 Consulta resumen SI/NO — [id=20015 | Central | clave=07]
+2026-07-22 15:04:54 [QUERY] 📋 Consulta catálogo — [id=20015 | Central | clave=07]
+2026-07-22 15:05:08 [QUERY] 📊 Consulta resumen SI/NO — [id=20015 | Central | clave=07]

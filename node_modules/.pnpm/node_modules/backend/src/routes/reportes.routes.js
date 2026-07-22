@@ -7,7 +7,7 @@ const {
   getCentral, getDistrito, getPendientes, getAvance, getHistorico,
   getAvanceDistritos, getAvanceActividades, getAvanceGrafica,
   getAvanceDistritosExcel, getAvanceActividadesExcel, getACapturar,
-  descargarHistorico
+  descargarHistorico, getResumenCaptura
 } = require('../controllers/reportes.controller')
 
 const reporteValidators = [
@@ -25,6 +25,7 @@ router.get('/avance-actividades', authMiddleware, roleGuard(1, 4, 5), getAvanceA
 router.get('/avance-grafica',     authMiddleware, roleGuard(1, 4, 5), getAvanceGrafica)
 router.get('/avance-distritos-excel',   authMiddleware, roleGuard(1, 4, 5), getAvanceDistritosExcel)
 router.get('/avance-actividades-excel', authMiddleware, roleGuard(1, 4, 5), getAvanceActividadesExcel)
+router.get('/resumen-captura',          authMiddleware, roleGuard(1, 2, 4, 5), getResumenCaptura)
 router.get('/historico',  authMiddleware, validateMiddleware, getHistorico)
 router.get('/descargar-historico/:anio', authMiddleware, descargarHistorico)
 

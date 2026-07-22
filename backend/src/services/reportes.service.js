@@ -812,6 +812,31 @@ const generarACapturar = async ({ mes, anio, idDistrito }) => {
   return wb.xlsx.writeBuffer()
 }
 
+const getResumenCaptura = async ({ perfil, clave }) => {
+  const porArea = perfil === 4 ? ` AND SUBSTRING(T.clave, 4, 2) = @clave` : ''
+  const params = {}
+  if (perfil === 4) params.clave = { type: sql.VarChar(10), value: clave }
+
+  const result = await query(
+    `SELECT 
+       COUNT(*) AS total,
+       SUM(CASE WHEN T.realizo = 'SI' THEN 1 ELSE 0 END) AS si,
+       SUM(CASE WHEN T.realizo = 'NO' THEN 1 ELSE 0 END) AS no
+     FROM sisecao_actividades_trabajo T
+     INNER JOIN sisecao_catactividad A
+       ON T.clave = A.clave AND T.mes = A.mes AND T.ano = A.ano
+     WHERE A.status = 1 AND T.status = 1${porArea}`,
+    params
+  )
+
+  const row = result.recordset[0] || {}
+  const total = row.total ?? 0
+  const si = row.si ?? 0
+  const no = row.no ?? 0
+
+  return { total, si, no }
+}
+
 module.exports = { 
   reportesService: { 
     generarCentral, 
@@ -824,6 +849,7 @@ module.exports = {
     getAvanceGrafica,
     generarAvanceDistritosExcel,
     generarAvanceActividadesExcel,
-    generarACapturar
+    generarACapturar,
+    getResumenCaptura
   } 
 }

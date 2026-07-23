@@ -426,3 +426,57 @@
 2026-07-23 11:37:15 [QUERY] 📊 Consulta resumen SI/NO — [id=20019 | Config]
 2026-07-23 11:37:20 [QUERY] 📋 Consulta catálogo — [id=20019 | Config]
 2026-07-23 11:37:22 [QUERY] 📋 Consulta seguimiento — [id=20019 | Config]
+2026-07-23 12:36:21 [DEBUG] Pool de conexión creado: utalaod @ 145.0.40.72
+2026-07-23 12:36:21 [INFO] 🔧 Estructura de BD verificada: columna contrasena ajustada a VARCHAR(100)
+2026-07-23 12:36:21 [SYSTEM] ╔══════════════════════════════════════╗
+2026-07-23 12:36:21 [SYSTEM] ║       SISECAOD 2026 — Backend API    ║
+2026-07-23 12:36:21 [SYSTEM] ╚══════════════════════════════════════╝
+2026-07-23 12:36:21 [SYSTEM] 🌐 Ambiente     : development
+2026-07-23 12:36:21 [SYSTEM] 🚀 Servidor     : http://localhost:3000
+2026-07-23 12:36:21 [SYSTEM] 📦 Base de datos: utalaod @ 145.0.40.72
+2026-07-23 12:36:21 [SYSTEM] ✅ Conexión BD  : Exitosa
+2026-07-23 12:36:21 [SYSTEM] 📋 Versión API  : v1
+2026-07-23 12:36:21 [SYSTEM] ⏰ Inicio       : 2026-07-23 18:36:21
+2026-07-23 12:36:21 [SYSTEM] ══════════════════════════════════════════
+2026-07-23 12:36:35 [DEBUG] Pool de conexión creado: utalaod @ 145.0.40.72
+2026-07-23 12:36:35 [INFO] 🔧 Estructura de BD verificada: columna contrasena ajustada a VARCHAR(100)
+2026-07-23 12:36:35 [SYSTEM] ╔══════════════════════════════════════╗
+2026-07-23 12:36:35 [SYSTEM] ║       SISECAOD 2026 — Backend API    ║
+2026-07-23 12:36:35 [SYSTEM] ╚══════════════════════════════════════╝
+2026-07-23 12:36:35 [SYSTEM] 🌐 Ambiente     : development
+2026-07-23 12:36:35 [SYSTEM] 🚀 Servidor     : http://localhost:3000
+2026-07-23 12:36:35 [SYSTEM] 📦 Base de datos: utalaod @ 145.0.40.72
+2026-07-23 12:36:35 [SYSTEM] ✅ Conexión BD  : Exitosa
+2026-07-23 12:36:35 [SYSTEM] 📋 Versión API  : v1
+2026-07-23 12:36:35 [SYSTEM] ⏰ Inicio       : 2026-07-23 18:36:35
+2026-07-23 12:36:35 [SYSTEM] ══════════════════════════════════════════
+2026-07-23 12:36:48 [DEBUG] Pool de conexión creado: utalaod @ 145.0.40.72
+2026-07-23 12:36:48 [INFO] 🔧 Estructura de BD verificada: columna contrasena ajustada a VARCHAR(100)
+2026-07-23 12:36:48 [SYSTEM] ╔══════════════════════════════════════╗
+2026-07-23 12:36:48 [SYSTEM] ║       SISECAOD 2026 — Backend API    ║
+2026-07-23 12:36:48 [SYSTEM] ╚══════════════════════════════════════╝
+2026-07-23 12:36:48 [SYSTEM] 🌐 Ambiente     : development
+2026-07-23 12:36:48 [SYSTEM] 🚀 Servidor     : http://localhost:3000
+2026-07-23 12:36:48 [SYSTEM] 📦 Base de datos: utalaod @ 145.0.40.72
+2026-07-23 12:36:48 [SYSTEM] ✅ Conexión BD  : Exitosa
+2026-07-23 12:36:48 [SYSTEM] 📋 Versión API  : v1
+2026-07-23 12:36:48 [SYSTEM] ⏰ Inicio       : 2026-07-23 18:36:48
+2026-07-23 12:36:48 [SYSTEM] ══════════════════════════════════════════
+2026-07-23 12:38:59 [QUERY] 📋 Consulta catálogo — [id=20019 | Config]
+2026-07-23 12:39:46 [ACTION] 📥 IMPORTAR DESFASE — mes=9 año=2026 — 80 act — [id=20019 | Config]
+2026-07-23 12:39:46 [QUERY] 📋 Consulta catálogo — [id=20019 | Config]
+2026-07-23 12:39:46 [QUERY] 📊 Consulta resumen SI/NO — [id=20019 | Config]
+2026-07-23 12:39:49 [QUERY] 📋 Consulta catálogo — [id=20019 | Config]
+2026-07-23 12:39:50 [QUERY] 📋 Consulta seguimiento — [id=20019 | Config]
+2026-07-23 12:43:49 [QUERY] 📊 Consulta resumen SI/NO — [id=20019 | Config]
+2026-07-23 12:43:56 [QUERY] 📋 Consulta catálogo — [id=20019 | Config]
+2026-07-23 12:44:01 [QUERY] 📊 Consulta resumen SI/NO — [id=20019 | Config]
+2026-07-23 12:44:17 [SESSION] 🟢 LOGIN  ➜  super-administrador (superadmin) — Config — IP: ::1
+2026-07-23 12:44:17 [QUERY] 📊 Consulta resumen SI/NO — [id=20019 | Config]
+2026-07-23 12:44:20 [QUERY] 📋 Consulta catálogo — [id=20019 | Config]
+2026-07-23 12:44:49 [ACTION] ⚙️  CONFIG periodo mes=10 año=2026 — [id=20019 | Config]
+2026-07-23 12:44:49 [QUERY] 📋 Consulta catálogo — [id=20019 | Config]
+2026-07-23 12:46:00 [QUERY] 📋 Consulta catálogo — [id=20019 | Config]
+2026-07-23 12:46:13 [ACTION] ⚙️  CONFIG periodo mes=7 año=2026 — [id=20019 | Config]
+2026-07-23 12:46:13 [QUERY] 📋 Consulta catálogo — [id=20019 | Config]
+2026-07-23 13:02:48 [QUERY] 📊 Consulta resumen SI/NO — [id=20019 | Config]

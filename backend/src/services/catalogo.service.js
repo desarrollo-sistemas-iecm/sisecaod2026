@@ -2,6 +2,21 @@ const { query, sql, getPool } = require('../config/database')
 const XLSX = require('xlsx')
 const fs = require('fs')
 
+const isHeaderRow = (row) => {
+  if (!row || row.length === 0 || row[0] === undefined || row[0] === null) return false
+  const firstCell = String(row[0]).toLowerCase().trim()
+  if (!firstCell) return false
+  
+  if (firstCell === 'clave' || firstCell === 'id' || firstCell === 'folio' || firstCell === 'codigo') {
+    return true
+  }
+  // Si no contiene ningún dígito numérico, es una cabecera de texto
+  if (!/\d/.test(firstCell)) {
+    return true
+  }
+  return false
+}
+
 const buildFiltros = ({ perfil, idDistrito, clave }) => {
   const porDistrito = idDistrito <= 33 ? ` AND b.iddistrito = @idDistrito` : ''
   const porArea = perfil === 4 ? ` AND SUBSTRING(a.clave, 4, 2) = @clave` : ''
@@ -199,8 +214,9 @@ const importarExcel = async (filePath, idUsuario) => {
     await cleanRequest.query(`UPDATE sisecao_catactividad SET status = 0 WHERE status = 1`)
     await cleanRequest.query(`UPDATE sisecao_actividades_trabajo SET status = 0 WHERE status = 1`)
     
-    // data[0] es la fila 1 (cabeceras). Las filas de datos inician en data[1] (índice 1 en adelante)
-    for (let i = 1; i < data.length; i++) {
+    // Auto-detectar si la primera fila es de cabeceras o contiene datos directos
+    const startIndex = isHeaderRow(data[0]) ? 1 : 0
+    for (let i = startIndex; i < data.length; i++) {
       const row = data[i]
       if (!row || row.length === 0) continue
       
@@ -303,7 +319,9 @@ const importarExcelDesfase = async (filePath, idUsuario, mesReal, anoReal) => {
     await cleanRequest.query(`UPDATE sisecao_catactividad SET status = 0 WHERE status = 1`)
     await cleanRequest.query(`UPDATE sisecao_actividades_trabajo SET status = 0 WHERE status = 1`)
     
-    for (let i = 1; i < data.length; i++) {
+    // Auto-detectar si la primera fila es de cabeceras o contiene datos directos
+    const startIndex = isHeaderRow(data[0]) ? 1 : 0
+    for (let i = startIndex; i < data.length; i++) {
       const row = data[i]
       if (!row || row.length === 0) continue
       

@@ -2,6 +2,8 @@ const { query, sql } = require('../config/database')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { env } = require('../config/env')
+const crypto = require('crypto')
+const { getIo, usuariosConectados } = require('../socket')
 
 const generateTokens = (payload) => {
   const accessToken  = jwt.sign(payload, env.jwt.secret,        { expiresIn: env.jwt.expiresIn })
@@ -49,12 +51,39 @@ const login = async (usuario, contrasena) => {
     }
   }
 
+  const nuevoSesionId = crypto.randomUUID()
+
+  // Si el usuario ya tenía una sesión activa conectada, avísale y desconéctalo
+  const sesionPrevia = usuariosConectados.get(user.id_usuario)
+  if (sesionPrevia) {
+    try {
+      const io = getIo()
+      io.to(sesionPrevia.socketId).emit('sesion:invalidada', {
+        mensaje: 'Tu cuenta ha sido cerrada porque se inició sesión en otro dispositivo.'
+      })
+      const prevSocket = io.sockets.sockets.get(sesionPrevia.socketId)
+      if (prevSocket) prevSocket.disconnect(true)
+    } catch (err) {
+      console.error('Error al desconectar sesión previa en WebSocket:', err.message)
+    }
+  }
+
+  // Actualizar sesion_id en la base de datos
+  await query(
+    `UPDATE sisecao_usuarios SET sesion_id = @sesionId WHERE id_usuario = @id`,
+    {
+      sesionId: { type: sql.VarChar(50), value: nuevoSesionId },
+      id: { type: sql.Int, value: user.id_usuario }
+    }
+  )
+
   const payload = {
     id:         user.id_usuario,
     perfil:     user.perfil,
     idDistrito: user.iddistrito,   // NULL para perfiles 1,2,4,5
     idUnidad:   user.id_unidad,    // NULL para perfiles 1,2,3,5
     clave:      user.clave,
+    sesion_id:  nuevoSesionId,
   }
 
   const { accessToken, refreshToken } = generateTokens(payload)

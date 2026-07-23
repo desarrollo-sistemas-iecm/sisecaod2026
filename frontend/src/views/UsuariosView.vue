@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, computed, watch } from 'vue'
+import { ref, onMounted, computed, watch, nextTick, onUnmounted } from 'vue'
 import { api } from '@/services/api'
 import { useSweetAlert } from '@/composables/useSweetAlert'
 import DashboardLayout from '@/layouts/DashboardLayout.vue'
@@ -9,6 +9,8 @@ import AppModal from '@/components/ui/AppModal.vue'
 import AppBadge from '@/components/ui/AppBadge.vue'
 import AppLoader from '@/components/ui/AppLoader.vue'
 import { PERFILES } from '@/utils/permissions'
+import gsap from 'gsap'
+import { useAuthStore } from '@/stores/auth.store'
 
 const { success, error, confirmar } = useSweetAlert()
 
@@ -47,6 +49,7 @@ const columns = [
   { key: 'usuario',    label: 'Usuario',          sortable: true  },
   { key: 'perfil',     label: 'Perfil',           sortable: true  },
   { key: 'asignacion', label: 'Distrito / Unidad' },
+  { key: 'estado',     label: 'Estado' },
   { key: 'acciones',   label: 'Acciones' },
 ]
 
@@ -164,6 +167,59 @@ const getAvatarColor = (perfil: number): string => {
 
 const totalUsuarios = computed(() => usuarios.value.length)
 
+// --- KPIs de Conexión ---
+const circleConectados = ref<SVGGeometryElement | null>(null)
+const circleDesconectados = ref<SVGGeometryElement | null>(null)
+
+const totalConectados = computed(() => usuarios.value.filter(u => u.conectado).length)
+const totalDesconectados = computed(() => usuarios.value.length - totalConectados.value)
+
+const pctConectados = computed(() => {
+  if (usuarios.value.length === 0) return 0
+  return (totalConectados.value / usuarios.value.length) * 100
+})
+
+const pctDesconectados = computed(() => {
+  if (usuarios.value.length === 0) return 0
+  return (totalDesconectados.value / usuarios.value.length) * 100
+})
+
+const animarConexiones = () => {
+  nextTick(() => {
+    const circ = 2 * Math.PI * 54
+    if (circleConectados.value) {
+      const offset = circ - (pctConectados.value / 100) * circ
+      gsap.fromTo(circleConectados.value,
+        { strokeDashoffset: circ },
+        { strokeDashoffset: offset, duration: 1.2, ease: 'power3.out' }
+      )
+    }
+    if (circleDesconectados.value) {
+      const offset = circ - (pctDesconectados.value / 100) * circ
+      gsap.fromTo(circleDesconectados.value,
+        { strokeDashoffset: circ },
+        { strokeDashoffset: offset, duration: 1.2, ease: 'power3.out' }
+      )
+    }
+  })
+}
+
+watch([pctConectados, pctDesconectados], () => {
+  animarConexiones()
+})
+
+const desconectarUsuario = async (id: number) => {
+  const confirm = await confirmar('¿Desconectar usuario?', 'Esta acción cerrará la sesión de este usuario en todos sus dispositivos en tiempo real.')
+  if (!confirm.isConfirmed) return
+  try {
+    await api.put(`/usuarios/${id}/desconectar`)
+    success('Desconectado', 'El usuario ha sido desconectado.')
+    fetchUsuarios()
+  } catch (err: any) {
+    error('Error', err.response?.data?.message || 'No se pudo desconectar al usuario.')
+  }
+}
+
 // ─────────────────────────────────────────────
 // UNIDADES
 // ─────────────────────────────────────────────
@@ -269,10 +325,28 @@ const toggleStatusUnidad = async (u: any) => {
 const IC = `w-full rounded-xl border border-slate-200 dark:border-slate-700 px-3 py-2 text-sm text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800
   focus:outline-none focus:ring-2 focus:ring-iecm-purple/30 focus:border-iecm-purple dark:focus:border-iecm-purple-light transition-all`
 
+const authStore = useAuthStore()
+
 onMounted(() => {
   fetchUsuarios()
   fetchUnidades()
   fetchUnidadesActivas()
+
+  // Escuchar eventos en tiempo real de Socket.io
+  if (authStore.socket) {
+    authStore.socket.on('usuarios:estado', ({ id_usuario, conectado }: { id_usuario: number, conectado: boolean }) => {
+      const idx = usuarios.value.findIndex(u => u.id_usuario === id_usuario)
+      if (idx !== -1) {
+        usuarios.value[idx].conectado = conectado
+      }
+    })
+  }
+})
+
+onUnmounted(() => {
+  if (authStore.socket) {
+    authStore.socket.off('usuarios:estado')
+  }
 })
 </script>
 
@@ -325,6 +399,121 @@ onMounted(() => {
       <div v-if="tabActiva === 'usuarios'" class="bg-white dark:bg-[#0B1120] rounded-2xl border border-slate-200/80 dark:border-white/10 shadow-sm p-5 transition-colors duration-200">
         <AppLoader v-if="loading" />
         <div v-else>
+          <!-- Resumen de Conexiones (Radiales) -->
+          <div class="grid grid-cols-1 gap-6 mb-6">
+            <div class="relative flex flex-col items-center justify-center p-6 rounded-3xl bg-slate-50 dark:bg-slate-900/40 border border-slate-200/40 dark:border-white/5 shadow-sm transition-colors duration-200">
+              <h3 class="text-slate-500 dark:text-white/60 text-xs font-bold uppercase tracking-[0.15em] mb-6">
+                Resumen de Conexiones
+              </h3>
+              <div class="flex flex-col sm:flex-row items-center justify-center gap-10 sm:gap-16 w-full">
+                
+                <!-- Radial Conectados -->
+                <div class="flex flex-col items-center">
+                  <div class="relative flex items-center justify-center w-32 h-32">
+                    <!-- Background track -->
+                    <svg class="w-full h-full transform -rotate-90" viewBox="0 0 120 120">
+                      <circle cx="60" cy="60" r="54" fill="none" class="stroke-emerald-100 dark:stroke-emerald-950/20" stroke-width="8" />
+                    </svg>
+                    <!-- Animated progress -->
+                    <svg class="absolute inset-0 w-full h-full transform -rotate-90" viewBox="0 0 120 120">
+                      <defs>
+                        <linearGradient id="gradConectados" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stop-color="#34d399" />
+                          <stop offset="100%" stop-color="#10b981" />
+                        </linearGradient>
+                      </defs>
+                      <circle
+                        ref="circleConectados"
+                        cx="60" cy="60" r="54"
+                        fill="none"
+                        stroke="url(#gradConectados)"
+                        stroke-width="8"
+                        stroke-linecap="round"
+                        stroke-dasharray="339.292"
+                        stroke-dashoffset="339.292"
+                        style="filter: drop-shadow(0 0 8px rgba(52,211,153,0.35));"
+                      />
+                    </svg>
+                    <!-- Center Text -->
+                    <div class="absolute flex flex-col items-center justify-center">
+                      <span class="text-xl font-extrabold text-emerald-600 dark:text-emerald-400 tracking-tighter" style="font-feature-settings: 'tnum';">
+                        {{ Math.round(pctConectados) }}%
+                      </span>
+                      <span class="text-[9px] text-slate-400 dark:text-white/40 font-semibold uppercase tracking-wider mt-0.5">
+                        Conectados
+                      </span>
+                    </div>
+                  </div>
+                  <!-- Label -->
+                  <div class="mt-3 flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.5)]"></span>
+                    <span class="text-sm font-bold text-slate-700 dark:text-white/80">{{ totalConectados }}</span>
+                    <span class="text-xs text-slate-400 dark:text-white/40">En línea</span>
+                  </div>
+                </div>
+
+                <!-- Divider -->
+                <div class="hidden sm:block w-px h-24 bg-slate-200 dark:bg-white/10"></div>
+                <div class="sm:hidden w-24 h-px bg-slate-200 dark:bg-white/10"></div>
+
+                <!-- Radial Desconectados -->
+                <div class="flex flex-col items-center">
+                  <div class="relative flex items-center justify-center w-32 h-32">
+                    <!-- Background track -->
+                    <svg class="w-full h-full transform -rotate-90" viewBox="0 0 120 120">
+                      <circle cx="60" cy="60" r="54" fill="none" class="stroke-slate-200 dark:stroke-white/5" stroke-width="8" />
+                    </svg>
+                    <!-- Animated progress -->
+                    <svg class="absolute inset-0 w-full h-full transform -rotate-90" viewBox="0 0 120 120">
+                      <defs>
+                        <linearGradient id="gradDesconectados" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stop-color="#94a3b8" />
+                          <stop offset="100%" stop-color="#475569" />
+                        </linearGradient>
+                      </defs>
+                      <circle
+                        ref="circleDesconectados"
+                        cx="60" cy="60" r="54"
+                        fill="none"
+                        stroke="url(#gradDesconectados)"
+                        stroke-width="8"
+                        stroke-linecap="round"
+                        stroke-dasharray="339.292"
+                        stroke-dashoffset="339.292"
+                        style="filter: drop-shadow(0 0 8px rgba(148,163,184,0.35));"
+                      />
+                    </svg>
+                    <!-- Center Text -->
+                    <div class="absolute flex flex-col items-center justify-center">
+                      <span class="text-xl font-extrabold text-slate-650 dark:text-slate-400 tracking-tighter" style="font-feature-settings: 'tnum';">
+                        {{ Math.round(pctDesconectados) }}%
+                      </span>
+                      <span class="text-[9px] text-slate-400 dark:text-white/40 font-semibold uppercase tracking-wider mt-0.5">
+                        Desconectados
+                      </span>
+                    </div>
+                  </div>
+                  <!-- Label -->
+                  <div class="mt-3 flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-slate-400 shadow-[0_0_6px_rgba(148,163,184,0.5)]"></span>
+                    <span class="text-sm font-bold text-slate-700 dark:text-white/80">{{ totalDesconectados }}</span>
+                    <span class="text-xs text-slate-400 dark:text-white/40">Desconectados</span>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Footer Info -->
+              <div class="w-full mt-5 text-center text-xs font-semibold text-slate-500 dark:text-white/50 pt-4 border-t border-slate-200/40 dark:border-white/10 flex justify-center gap-6">
+                <span>Total Usuarios: <strong class="text-slate-800 dark:text-white">{{ totalUsuarios }}</strong></span>
+                <span>|</span>
+                <span>Conectados: <strong class="text-emerald-600 dark:text-emerald-400">{{ totalConectados }}</strong></span>
+                <span>|</span>
+                <span>Desconectados: <strong class="text-slate-600 dark:text-slate-400">{{ totalDesconectados }}</strong></span>
+              </div>
+            </div>
+          </div>
+
           <AppTable :columns="columns" :rows="usuarios" searchable>
 
             <template #cell-num="{ index }">
@@ -373,9 +562,43 @@ onMounted(() => {
               </span>
             </template>
 
+            <!-- Estado Badge/Button -->
+            <template #cell-estado="{ row }">
+              <div class="flex items-center gap-2">
+                <!-- Indicador que se prende cuando está en línea -->
+                <span class="flex h-2.5 w-2.5 relative">
+                  <span
+                    v-if="row.conectado"
+                    class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"
+                  ></span>
+                  <span
+                    class="relative inline-flex rounded-full h-2.5 w-2.5"
+                    :class="row.conectado ? 'bg-emerald-500 shadow-[0_0_8px_#10b981]' : 'bg-slate-350 dark:bg-slate-600'"
+                  ></span>
+                </span>
+                <span class="text-xs font-semibold" :class="row.conectado ? 'text-emerald-600 dark:text-emerald-450 font-bold' : 'text-slate-400 dark:text-slate-500'">
+                  {{ row.conectado ? 'En línea' : 'Desconectado' }}
+                </span>
+              </div>
+            </template>
+
             <!-- Acciones -->
             <template #cell-acciones="{ row }">
               <div class="flex items-center gap-1">
+                <!-- Botón de desconexión forzada (siempre visible, habilitado solo si está conectado) -->
+                <button
+                  class="p-1.5 rounded-xl transition-all"
+                  :class="row.conectado
+                    ? 'text-amber-500 hover:text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-950/20'
+                    : 'text-slate-300 dark:text-slate-700 cursor-not-allowed opacity-50'"
+                  :disabled="!row.conectado"
+                  title="Desconectar usuario forzosamente"
+                  @click="desconectarUsuario(row.id_usuario)"
+                >
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                  </svg>
+                </button>
                 <button
                   class="p-1.5 text-slate-450 hover:text-iecm-purple dark:hover:text-iecm-purple-light hover:bg-violet-50 dark:hover:bg-white/5 rounded-xl transition-all"
                   title="Editar usuario"

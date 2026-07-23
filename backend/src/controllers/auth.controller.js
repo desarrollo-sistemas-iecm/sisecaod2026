@@ -42,7 +42,14 @@ const refresh = async (req, res, next) => {
 
     const decoded = jwt.verify(token, env.jwt.refreshSecret)
     const accessToken = jwt.sign(
-      { id: decoded.id, perfil: decoded.perfil, idDistrito: decoded.idDistrito, clave: decoded.clave },
+      {
+        id: decoded.id,
+        perfil: decoded.perfil,
+        idDistrito: decoded.idDistrito,
+        idUnidad: decoded.idUnidad,
+        clave: decoded.clave,
+        sesion_id: decoded.sesion_id
+      },
       env.jwt.secret,
       { expiresIn: env.jwt.expiresIn }
     )

@@ -3,7 +3,7 @@ const { body, param } = require('express-validator')
 const { authMiddleware } = require('../middlewares/auth.middleware')
 const { roleGuard } = require('../middlewares/roles.middleware')
 const { validateMiddleware } = require('../middlewares/validate.middleware')
-const { getAll, create, update, remove } = require('../controllers/usuarios.controller')
+const { getAll, create, update, remove, desconectar } = require('../controllers/usuarios.controller')
 
 const userValidators = [
   body('nombre').trim().notEmpty().withMessage('El nombre es requerido'),
@@ -28,6 +28,12 @@ router.put('/:id',
   userValidators,
   validateMiddleware,
   update
+)
+
+router.put('/:id/desconectar',
+  param('id').isInt(),
+  validateMiddleware,
+  desconectar
 )
 
 router.delete('/:id',

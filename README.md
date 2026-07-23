@@ -33,12 +33,15 @@ El proyecto está pensado para ser **modular**, **seguro** y **extensible**:
 
 | Feature | Descripción | Tecnologías |
 |---------|-------------|-------------|
-| **Importación Normal** | Carga un Excel con actividades para el periodo activo. | `catalogo.service.importarExcel` → transacción SQL |
+| **Importación Normal** | Carga un Excel con actividades para el periodo activo con auto-detección de cabeceras. | `catalogo.service.importarExcel` → transacción SQL |
 | **Importación con Desfase** | Permite cargar un Excel asignándole un **mes/año real** arbitrario (desfase). Sólo accesible al **Perfil 5 (Administrador de Configuración)**. Contiene modal de **doble confirmación** (`CONFIRMAR`). | `catalogo.service.importarExcelDesfase`, nueva ruta `/catalogo/importar-desfase` con `roleGuard(5)` |
-| **Componente `ExcelUploader`** | Drag‑&‑Drop, validación de extensión/tamaño, UI premium. | Vue 3, Composition API, Tailwind‑like clases personalizadas |
-| **Tabulación en `ImportarView.vue`** | Dos pestañas: *Calendario y Catálogo Activo* y *Importación con Desfase* (solo perfil 5). | Vue Router, dynamic UI |
-| **Guardado de Avance Distrital** | `seguimiento.service.save` ahora usa `mes` y `ano` directamente de `sisecao_catactividad`, garantizando consistencia histórica. | MSSQL, transacciones |
-| **Seguridad** | `roleGuard` protege endpoints, validación `express-validator`, manejo de errores estandarizado. | Express, middleware |
+| **Auto-detección de Cabeceras** | Determina dinámicamente si la primera fila de un Excel contiene títulos o datos directos para evitar omitir el primer registro (`13-03-1`). | `isHeaderRow` helper en `catalogo.service.js` |
+| **Resumen de Avance en Dashboard** | KPIs con donuts circulares (SI/NO Realizadas) animados con GSAP. | Vue 3, GSAP, `/reportes/resumen-captura` |
+| **Alertas & Bot de Telegram** | Notificaciones en tiempo real para errores 500 y advertencias 400 (con deduplicación de 5 min). Envía reportes cada 10 min (sesiones) y cada 2 min (avance global). | `telegram.service.js`, Axios, Winston log hooks |
+| **CORS Dinámico** | Permite cualquier origen de red en desarrollo (como la IP del servidor `http://145.0.40.48`), manteniendo seguridad en producción. | Express CORS resolver |
+| **Sesión Única (Single Session)** | Invalida y desconecta sesiones previas cuando se inicia sesión en un dispositivo nuevo mediante UUID de sesión en BD (`sesion_id`). | `auth.service.js`, Socket.io, JWT validation |
+| **Middleware Fail-Closed** | Valida el `sesion_id` contra la BD en cada petición. Si la BD falla o da timeout, la petición se bloquea preventivamente. | `auth.middleware.js` |
+| **Panel de Conexiones en Vivo** | Muestra en vivo quién está "En línea" (con indicador brillante pulsante), conteo radial animado y botón de desconexión forzada. | `UsuariosView.vue`, Socket.io-client, GSAP |
 
 ---
 
@@ -48,11 +51,12 @@ El proyecto está pensado para ser **modular**, **seguro** y **extensible**:
 root
 ├─ backend/                 # API Node/Express
 │   ├─ src/
-│   │   ├─ config/          # DB pool / conexión
-│   │   ├─ controllers/     # catalogo.controller.js (importar, importarDesfase)
-│   │   ├─ middlewares/     # auth, roleGuard, validate
-│   │   ├─ routes/          # catalogo.routes.js (nueva ruta /importar-desfase)
-│   │   ├─ services/        # catalogo.service.js (importarExcelDesfase), seguimiento.service.js
+│   │   ├─ config/          # DB pool / conexión, logger.js (ANSI colors)
+│   │   ├─ controllers/     # catalogo, usuarios (desconectar), reportes
+│   │   ├─ middlewares/     # auth (Fail-Closed sesion_id), roleGuard, validate
+│   │   ├─ routes/          # catalogo, usuarios (put desconectar)
+│   │   ├─ services/        # catalogo, auth (session UUID), telegram.service.js
+│   │   ├─ socket.js        # Módulo de WebSockets (Socket.io)
 │   │   └─ utils/          # response helpers
 │   └─ public/             # <-- Vite output (static SPA)
 │
@@ -60,7 +64,11 @@ root
 │   ├─ src/
 │   │   ├─ components/
 │   │   │   └─ catalogo/ExcelUploader.vue   # reusable uploader
-│   │   ├─ views/ImportarView.vue          # UI con tabs + modal
+│   │   ├─ stores/
+│   │   │   └─ auth.store.ts   # Conexión persistente Socket.io + auto-reconexión
+│   │   ├─ views/
+│   │   │   ├─ ImportarView.vue   # UI con tabs + modal
+│   │   │   └─ UsuariosView.vue   # Tabla con badges en vivo, radiales GSAP
 │   │   ├─ router/   # rutas vue
 │   │   └─ layouts/  # DashboardLayout.vue etc.
 │   └─ vite.config.js    # outDir -> ../backend/public
@@ -182,6 +190,24 @@ Esto permite que cualquier ruta del cliente (por ejemplo `/dashboard`) sea atend
 - Antes: el mes y año se obtenían de `sisecao_settings` (periodo activo).
 - Ahora: la información se extrae **directamente** del registro de `sisecao_catactividad` que se está guardando, garantizando que el histórico sea fiel al periodo real de la actividad.
 - Esto evita inconsistencias cuando se usan desfases.
+
+### Auto-detección de Cabeceras en Excel
+- Al cargar el archivo Excel, el sistema analiza la primera fila (`data[0]`) a través de la función `isHeaderRow`.
+- Si detecta palabras clave (ej. *clave*, *folio*, *id*) o la fila no tiene números, la omite considerándola una cabecera de títulos e inicia la importación en la fila 2 (`index 1`).
+- Si detecta que contiene datos directos (ej. `13-03-1`), arranca la importación inmediatamente en la fila 1 (`index 0`). Esto evita omitir datos válidos.
+
+### Alertas y Reportes en Tiempo Real (Telegram)
+- **Logger centralizado:** Winstom categoriza e imprime en consola con colores ANSI (`SESSION`=verde, `ACTION`=azul, `QUERY`=celeste, `WARN`=amarillo, `ERROR`=rojo, `SYSTEM`=púrpura).
+- **Alertas inmediatas:** Errores 500 y advertencias de cliente 400 se envían inmediatamente al bot de Telegram. Los errores 500 cuentan con un mapa de deduplicación de 5 minutos en memoria.
+- **Reportes periódicos:**
+  - **Resumen de Sesiones:** Cada 10 minutos exactos del reloj del sistema (xx:00, xx:10, etc.) el bot envía una lista detallada de los usuarios que iniciaron y cerraron sesión.
+  - **Avance Global:** Cada 2 minutos se consulta a la BD y se envía un reporte del porcentaje consolidado de avance, metas totales y capturas.
+
+### Sesión Única y WebSockets (Socket.io)
+- **Inicio de sesión único:** Al iniciar sesión, se genera un identificador UUIDv4 (`sesion_id`) que se almacena en la tabla de usuarios y se firma dentro del token JWT.
+- **Expulsión en caliente:** Si el usuario tiene una sesión conectada en otro dispositivo, Socket.io le emite `sesion:invalidada` cerrando la sesión previa e invalidando su token.
+- **Middleware Fail-Closed:** Cada petición HTTP autenticada compara el `sesion_id` del token JWT contra el de la base de datos. Si la consulta a la BD falla por cualquier motivo (caída, timeout de pool), la petición se bloquea con error 500.
+- **Panel de Monitoreo:** En el módulo de usuarios, los administradores ven en tiempo real quién está en línea (con indicador pulsante/brillante). Cuenta con gráficos radiales de resumen animados por GSAP y botón para forzar la desconexión desde el backend.
 
 ---
 

@@ -2,7 +2,9 @@ const os = require('os')
 const { connectDb } = require('./config/database')
 const { logSystem, logError } = require('./config/logger')
 const { env } = require('./config/env')
+const http = require('http')
 const app = require('./app')
+const { initSocket } = require('./socket')
 
 const getLocalIp = () => {
   const interfaces = os.networkInterfaces()
@@ -19,7 +21,10 @@ const getLocalIp = () => {
 const startServer = async () => {
   try {
     await connectDb()
-    app.listen(env.port, () => {
+    const server = http.createServer(app)
+    initSocket(server)
+
+    server.listen(env.port, () => {
       const ip = getLocalIp()
       let serverUrl = `http://localhost:${env.port}`
 

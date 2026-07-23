@@ -13,9 +13,19 @@ app.use(helmet({
   contentSecurityPolicy: false, // Deshabilitar CSP para evitar bloqueos de scripts/estilos de Vue en local/desarrollo
 }))
 app.use(cors({
-  origin: env.nodeEnv === 'production'
-    ? 'https://aplicaciones.iecm.mx'
-    : ['http://localhost:5173', 'http://localhost:3000'],
+  origin: (origin, callback) => {
+    if (env.nodeEnv === 'production') {
+      const allowed = ['https://aplicaciones.iecm.mx']
+      if (!origin || allowed.includes(origin)) {
+        callback(null, true)
+      } else {
+        callback(new Error('CORS not allowed by policy'))
+      }
+    } else {
+      // En desarrollo, permitir cualquier origen (localhost, IP local 145.0.40.48, etc.)
+      callback(null, true)
+    }
+  },
   credentials: true,
 }))
 app.use(express.json())

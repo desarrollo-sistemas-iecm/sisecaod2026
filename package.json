@@ -6,6 +6,8 @@
     "dev:frontend": "pnpm --filter frontend dev",
     "dev": "concurrently \"pnpm dev:backend\" \"pnpm dev:frontend\"",
     "build:frontend": "pnpm --filter frontend build",
+    "build:desarrollo": "pnpm --filter frontend build:desarrollo",
+    "build:produccion": "pnpm --filter frontend build:produccion",
     "start:backend": "pnpm --filter backend start"
   },
   "devDependencies": {

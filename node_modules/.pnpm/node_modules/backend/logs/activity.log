@@ -296,3 +296,133 @@
 2026-07-22 16:40:52 [SYSTEM] 📋 Versión API  : v1
 2026-07-22 16:40:52 [SYSTEM] ⏰ Inicio       : 2026-07-22 22:40:52
 2026-07-22 16:40:52 [SYSTEM] ══════════════════════════════════════════
+2026-07-22 16:56:05 [DEBUG] Pool de conexión creado: utalaod @ 145.0.40.72
+2026-07-22 16:56:05 [INFO] 🔧 Estructura de BD verificada: columna contrasena ajustada a VARCHAR(100)
+2026-07-22 16:56:05 [SYSTEM] ╔══════════════════════════════════════╗
+2026-07-22 16:56:05 [SYSTEM] ║       SISECAOD 2026 — Backend API    ║
+2026-07-22 16:56:05 [SYSTEM] ╚══════════════════════════════════════╝
+2026-07-22 16:56:05 [SYSTEM] 🌐 Ambiente     : development
+2026-07-22 16:56:05 [SYSTEM] 🚀 Servidor     : http://localhost:3000
+2026-07-22 16:56:05 [SYSTEM] 📦 Base de datos: utalaod @ 145.0.40.72
+2026-07-22 16:56:05 [SYSTEM] ✅ Conexión BD  : Exitosa
+2026-07-22 16:56:05 [SYSTEM] 📋 Versión API  : v1
+2026-07-22 16:56:05 [SYSTEM] ⏰ Inicio       : 2026-07-22 22:56:05
+2026-07-22 16:56:05 [SYSTEM] ══════════════════════════════════════════
+2026-07-22 17:30:55 [DEBUG] Pool de conexión creado: utalaod @ 145.0.40.72
+2026-07-22 17:30:55 [INFO] 🔧 Estructura de BD verificada: columna contrasena ajustada a VARCHAR(100)
+2026-07-22 17:30:55 [SYSTEM] ╔══════════════════════════════════════╗
+2026-07-22 17:30:55 [SYSTEM] ║       SISECAOD 2026 — Backend API    ║
+2026-07-22 17:30:55 [SYSTEM] ╚══════════════════════════════════════╝
+2026-07-22 17:30:55 [SYSTEM] 🌐 Ambiente     : development
+2026-07-22 17:30:55 [SYSTEM] 🚀 Servidor     : http://localhost:3000
+2026-07-22 17:30:55 [SYSTEM] 📦 Base de datos: utalaod @ 145.0.40.72
+2026-07-22 17:30:55 [SYSTEM] ✅ Conexión BD  : Exitosa
+2026-07-22 17:30:55 [SYSTEM] 📋 Versión API  : v1
+2026-07-22 17:30:55 [SYSTEM] ⏰ Inicio       : 2026-07-22 23:30:55
+2026-07-22 17:30:55 [SYSTEM] ══════════════════════════════════════════
+2026-07-22 17:39:09 [DEBUG] Pool de conexión creado: utalaod @ 145.0.40.72
+2026-07-22 17:39:09 [INFO] 🔧 Estructura de BD verificada: columna contrasena ajustada a VARCHAR(100)
+2026-07-22 17:39:09 [SYSTEM] ╔══════════════════════════════════════╗
+2026-07-22 17:39:09 [SYSTEM] ║       SISECAOD 2026 — Backend API    ║
+2026-07-22 17:39:09 [SYSTEM] ╚══════════════════════════════════════╝
+2026-07-22 17:39:09 [SYSTEM] 🌐 Ambiente     : development
+2026-07-22 17:39:09 [SYSTEM] 🚀 Servidor     : http://localhost:3000
+2026-07-22 17:39:09 [SYSTEM] 📦 Base de datos: utalaod @ 145.0.40.72
+2026-07-22 17:39:09 [SYSTEM] ✅ Conexión BD  : Exitosa
+2026-07-22 17:39:09 [SYSTEM] 📋 Versión API  : v1
+2026-07-22 17:39:09 [SYSTEM] ⏰ Inicio       : 2026-07-22 23:39:09
+2026-07-22 17:39:09 [SYSTEM] ══════════════════════════════════════════
+2026-07-22 17:49:51 [DEBUG] Pool de conexión creado: utalaod @ 145.0.40.72
+2026-07-22 17:49:51 [INFO] 🔧 Estructura de BD verificada: columna contrasena ajustada a VARCHAR(100)
+2026-07-22 17:50:17 [QUERY] 📊 Consulta resumen SI/NO — [id=3 | Admin]
+2026-07-22 17:50:47 [SESSION] 🟢 LOGIN  ➜  Central - DEAPyF (CENTRAL4) — Central | clave=06 — IP: ::1
+2026-07-22 17:50:48 [QUERY] 📊 Consulta resumen SI/NO — [id=20014 | Central | clave=06]
+2026-07-22 17:53:13 [QUERY] 📋 Consulta catálogo — [id=20014 | Central | clave=06]
+2026-07-22 17:54:28 [DEBUG] Pool de conexión creado: utalaod @ 145.0.40.72
+2026-07-22 17:54:29 [INFO] 🔧 Estructura de BD verificada: columna contrasena ajustada a VARCHAR(100)
+2026-07-22 17:55:26 [DEBUG] Pool de conexión creado: utalaod @ 145.0.40.72
+2026-07-22 17:55:26 [INFO] 🔧 Estructura de BD verificada: columna contrasena ajustada a VARCHAR(100)
+2026-07-22 17:55:26 [SYSTEM] ╔══════════════════════════════════════╗
+2026-07-22 17:55:26 [SYSTEM] ║       SISECAOD 2026 — Backend API    ║
+2026-07-22 17:55:26 [SYSTEM] ╚══════════════════════════════════════╝
+2026-07-22 17:55:26 [SYSTEM] 🌐 Ambiente     : development
+2026-07-22 17:55:26 [SYSTEM] 🚀 Servidor     : http://localhost:3000
+2026-07-22 17:55:26 [SYSTEM] 📦 Base de datos: utalaod @ 145.0.40.72
+2026-07-22 17:55:26 [SYSTEM] ✅ Conexión BD  : Exitosa
+2026-07-22 17:55:26 [SYSTEM] 📋 Versión API  : v1
+2026-07-22 17:55:26 [SYSTEM] ⏰ Inicio       : 2026-07-22 23:55:26
+2026-07-22 17:55:26 [SYSTEM] ══════════════════════════════════════════
+2026-07-22 17:55:44 [SESSION] 🟢 LOGIN  ➜  Central - UTCSyD (central7) — Central | clave=09 — IP: ::1
+2026-07-22 17:55:44 [QUERY] 📊 Consulta resumen SI/NO — [id=20017 | Central | clave=09]
+2026-07-22 17:55:48 [QUERY] 📋 Consulta catálogo — [id=20017 | Central | clave=09]
+2026-07-22 17:56:09 [QUERY] 📊 Consulta resumen SI/NO — [id=20017 | Central | clave=09]
+2026-07-22 18:01:23 [DEBUG] Pool de conexión creado: utalaod @ 145.0.40.72
+2026-07-22 18:01:23 [INFO] 🔧 Estructura de BD verificada: columna contrasena ajustada a VARCHAR(100)
+2026-07-22 18:01:23 [SYSTEM] ╔══════════════════════════════════════╗
+2026-07-22 18:01:23 [SYSTEM] ║       SISECAOD 2026 — Backend API    ║
+2026-07-22 18:01:23 [SYSTEM] ╚══════════════════════════════════════╝
+2026-07-22 18:01:23 [SYSTEM] 🌐 Ambiente     : development
+2026-07-22 18:01:23 [SYSTEM] 🚀 Servidor     : http://localhost:3000
+2026-07-22 18:01:23 [SYSTEM] 📦 Base de datos: utalaod @ 145.0.40.72
+2026-07-22 18:01:23 [SYSTEM] ✅ Conexión BD  : Exitosa
+2026-07-22 18:01:23 [SYSTEM] 📋 Versión API  : v1
+2026-07-22 18:01:23 [SYSTEM] ⏰ Inicio       : 2026-07-23 00:01:23
+2026-07-22 18:01:23 [SYSTEM] ══════════════════════════════════════════
+2026-07-22 18:01:42 [SESSION] 🟢 LOGIN  ➜  Central - UTCSyD (central7) — Central | clave=09 — IP: ::1
+2026-07-22 18:01:42 [QUERY] 📊 Consulta resumen SI/NO — [id=20017 | Central | clave=09]
+2026-07-22 18:01:45 [QUERY] 📋 Consulta catálogo — [id=20017 | Central | clave=09]
+2026-07-22 18:01:48 [QUERY] 📊 Consulta resumen SI/NO — [id=20017 | Central | clave=09]
+2026-07-23 11:03:09 [SESSION] 🟢 LOGIN  ➜  Central - DEGDHECyCC (central3) — Central | clave=05 — IP: ::1
+2026-07-23 11:03:09 [QUERY] 📊 Consulta resumen SI/NO — [id=20013 | Central | clave=05]
+2026-07-23 11:03:27 [QUERY] 📋 Consulta catálogo — [id=20013 | Central | clave=05]
+2026-07-23 11:11:31 [WARN] 🔒 Login fallido: usuario="dist2_2" — Sistema cerrado. El periodo de captura no está activo. — IP: ::1
+2026-07-23 11:11:44 [WARN] 🔒 Login fallido: usuario="dist2_2" — Sistema cerrado. El periodo de captura no está activo. — IP: ::1
+2026-07-23 11:11:46 [WARN] 🔒 Login fallido: usuario="dist2_2" — Sistema cerrado. El periodo de captura no está activo. — IP: ::1
+2026-07-23 11:11:58 [WARN] 🔒 Login fallido: usuario="admin" — Usuario o contraseña incorrectos — IP: ::1
+2026-07-23 11:12:06 [SESSION] 🟢 LOGIN  ➜  administrador (admin) — Admin — IP: ::1
+2026-07-23 11:12:06 [QUERY] 📊 Consulta resumen SI/NO — [id=3 | Admin]
+2026-07-23 11:12:13 [QUERY] 📋 Consulta catálogo — [id=3 | Admin]
+2026-07-23 11:12:16 [QUERY] 📊 Consulta resumen SI/NO — [id=3 | Admin]
+2026-07-23 11:12:45 [WARN] 🔒 Login fallido: usuario="dist2_2" — Sistema cerrado. El periodo de captura no está activo. — IP: ::1
+2026-07-23 11:12:56 [WARN] 🔒 Login fallido: usuario="dist2_2" — Sistema cerrado. El periodo de captura no está activo. — IP: ::1
+2026-07-23 11:13:02 [SESSION] 🟢 LOGIN  ➜  administrador (admin) — Admin — IP: ::1
+2026-07-23 11:13:02 [QUERY] 📊 Consulta resumen SI/NO — [id=3 | Admin]
+2026-07-23 11:13:05 [QUERY] 📋 Consulta catálogo — [id=3 | Admin]
+2026-07-23 11:13:33 [ACTION] ⚙️  CONFIG periodo mes=8 año=2026 — [id=3 | Admin]
+2026-07-23 11:13:33 [QUERY] 📋 Consulta catálogo — [id=3 | Admin]
+2026-07-23 11:13:44 [QUERY] 📊 Consulta resumen SI/NO — [id=3 | Admin]
+2026-07-23 11:13:56 [SESSION] 🟢 LOGIN  ➜  Distrito2 captura (dist2_2) — Capturista | Distrito 2 — IP: ::1
+2026-07-23 11:14:17 [SESSION] 🟢 LOGIN  ➜  administrador (admin) — Admin — IP: ::1
+2026-07-23 11:14:17 [QUERY] 📊 Consulta resumen SI/NO — [id=3 | Admin]
+2026-07-23 11:14:19 [QUERY] 📋 Consulta catálogo — [id=3 | Admin]
+2026-07-23 11:14:29 [ACTION] ⚙️  CONFIG periodo mes=8 año=2026 — [id=3 | Admin]
+2026-07-23 11:14:29 [QUERY] 📋 Consulta catálogo — [id=3 | Admin]
+2026-07-23 11:14:56 [ACTION] ⚙️  CONFIG periodo mes=9 año=2026 — [id=3 | Admin]
+2026-07-23 11:14:56 [QUERY] 📋 Consulta catálogo — [id=3 | Admin]
+2026-07-23 11:21:35 [ACTION] 📥 IMPORTAR catálogo — 77 actividades — [id=3 | Admin]
+2026-07-23 11:21:35 [QUERY] 📋 Consulta catálogo — [id=3 | Admin]
+2026-07-23 11:21:35 [QUERY] 📋 Consulta catálogo — [id=3 | Admin]
+2026-07-23 11:27:10 [QUERY] 📊 Consulta resumen SI/NO — [id=3 | Admin]
+2026-07-23 11:27:12 [QUERY] 📋 Consulta catálogo — [id=3 | Admin]
+2026-07-23 11:27:38 [ACTION] ⚙️  CONFIG periodo mes=9 año=2026 — [id=3 | Admin]
+2026-07-23 11:27:38 [QUERY] 📋 Consulta catálogo — [id=3 | Admin]
+2026-07-23 11:28:16 [ACTION] ⚙️  CONFIG periodo mes=10 año=2026 — [id=3 | Admin]
+2026-07-23 11:28:16 [QUERY] 📋 Consulta catálogo — [id=3 | Admin]
+2026-07-23 11:29:04 [ACTION] 📥 IMPORTAR catálogo — 77 actividades — [id=3 | Admin]
+2026-07-23 11:29:04 [QUERY] 📋 Consulta catálogo — [id=3 | Admin]
+2026-07-23 11:29:04 [QUERY] 📋 Consulta catálogo — [id=3 | Admin]
+2026-07-23 11:30:15 [SESSION] 🟢 LOGIN  ➜  super-administrador (superadmin) — Config — IP: ::1
+2026-07-23 11:30:15 [QUERY] 📊 Consulta resumen SI/NO — [id=20019 | Config]
+2026-07-23 11:30:17 [QUERY] 📋 Consulta catálogo — [id=20019 | Config]
+2026-07-23 11:33:03 [ACTION] 📥 IMPORTAR DESFASE — mes=9 año=2026 — 79 act — [id=20019 | Config]
+2026-07-23 11:33:03 [QUERY] 📋 Consulta catálogo — [id=20019 | Config]
+2026-07-23 11:33:03 [QUERY] 📊 Consulta resumen SI/NO — [id=20019 | Config]
+2026-07-23 11:33:10 [QUERY] 📋 Consulta catálogo — [id=20019 | Config]
+2026-07-23 11:33:29 [QUERY] 📊 Consulta resumen SI/NO — [id=20019 | Config]
+2026-07-23 11:33:30 [QUERY] 📋 Consulta seguimiento — [id=20019 | Config]
+2026-07-23 11:35:06 [QUERY] 📋 Consulta catálogo — [id=20019 | Config]
+2026-07-23 11:37:15 [ACTION] 📥 IMPORTAR DESFASE — mes=12 año=2025 — 79 act — [id=20019 | Config]
+2026-07-23 11:37:15 [QUERY] 📋 Consulta catálogo — [id=20019 | Config]
+2026-07-23 11:37:15 [QUERY] 📊 Consulta resumen SI/NO — [id=20019 | Config]
+2026-07-23 11:37:20 [QUERY] 📋 Consulta catálogo — [id=20019 | Config]
+2026-07-23 11:37:22 [QUERY] 📋 Consulta seguimiento — [id=20019 | Config]

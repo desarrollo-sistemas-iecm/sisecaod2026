@@ -13,6 +13,36 @@ let logoutUsers = [];
 // Map en memoria para deduplicar alertas de errores (5 minutos)
 const recentErrors = new Map();
 
+function escapeHtml(texto) {
+  return String(texto)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function barraProgreso(porcentaje, longitud = 10) {
+  const llenos = Math.round((porcentaje / 100) * longitud);
+  return '▓'.repeat(llenos) + '░'.repeat(longitud - llenos);
+}
+
+function formatSessionLine(line) {
+  if (line.includes('— IP:')) {
+    const ipParts = line.split('— IP:');
+    const mainPart = ipParts[0].trim();
+    const ip = ipParts[1] ? ipParts[1].trim() : '::1';
+
+    const userParts = mainPart.split(' — ');
+    const nameAndUser = userParts[0].trim();
+    const details = userParts[1] ? userParts[1].trim() : '';
+
+    const userMatch = nameAndUser.match(/\(([^)]+)\)/);
+    const usuario = userMatch ? userMatch[1] : nameAndUser;
+
+    return `  • <code>${escapeHtml(usuario)}</code> — ${escapeHtml(details)} — IP: <code>${escapeHtml(ip)}</code>`;
+  }
+  return `  • <code>${escapeHtml(line)}</code>`;
+}
+
 function registrarEvento(tipo, mensaje) {
   if (tipo === 'sesiones' && mensaje) {
     if (mensaje.includes('🟢 LOGIN')) {
@@ -33,49 +63,58 @@ async function enviarResumenSesiones() {
   const emoji = AMBIENTE_EMOJI[ambiente] || '⚙️';
   
   const now = new Date();
-  const start = new Date(now.getTime() - 10 * 60 * 1000); // 10 minutos
+  const start = new Date(now.getTime() - 1 * 60 * 1000); // 1 minuto
   const formatTime = (d) => d.toTimeString().split(' ')[0].slice(0, 8); // HH:mm:ss
   const rangeStr = `${formatTime(start)} - ${formatTime(now)}`;
 
   const listLogins = loginUsers.length > 0
-    ? '\n' + loginUsers.map(u => `  • ${u}`).join('\n')
-    : ' Ninguno';
+    ? '\n' + loginUsers.map(formatSessionLine).join('\n')
+    : '  • Ninguna';
     
   const listLogouts = logoutUsers.length > 0
-    ? '\n' + logoutUsers.map(u => `  • ${u}`).join('\n')
-    : ' Ninguno';
+    ? '\n' + logoutUsers.map(formatSessionLine).join('\n')
+    : '  • Ninguno';
 
-  const mensaje = `${emoji} *[${ambiente.toUpperCase()}]*\n` +
-    `📊 *Resumen de Sesiones - SISECAOD*\n` +
-    `🕐 Periodo (10 min): ${rangeStr}\n\n` +
-    `🟢 Sesiones iniciadas: ${loginUsers.length}${listLogins}\n` +
-    `🔴 Sesiones cerradas: ${listLogouts}`;
+  const mensaje = `${emoji} <b>[${ambiente.toUpperCase()}]</b>\n` +
+    `📊 <b>Resumen de Sesiones - SISECAOD</b>\n` +
+    `🕐 <b>${rangeStr}</b>\n` +
+    `━━━━━━━━━━━━━━━\n\n` +
+    `🟢 <b>Iniciadas (${loginUsers.length})</b>${listLogins}\n\n` +
+    `🔴 <b>Cerradas (${logoutUsers.length})</b>${listLogouts}`;
 
   try {
     await enviarMensajeTelegram(mensaje);
+    try {
+      const { logger } = require('../config/logger');
+      logger.info('Telegram: Resumen de sesiones enviado con éxito.');
+    } catch (logErr) {
+      console.log('Telegram: Resumen de sesiones enviado con éxito.');
+    }
     // Vaciar listas
     loginUsers = [];
     logoutUsers = [];
   } catch (err) {
-    console.error('Error enviando resumen de sesiones a Telegram:', err.message);
+    try {
+      const { logger } = require('../config/logger');
+      logger.error('Error enviando resumen de sesiones a Telegram: ' + err.message);
+    } catch (logErr) {
+      console.error('Error enviando resumen de sesiones a Telegram:', err.message);
+    }
   }
 }
 
-// Lógica de programación exacta para el resumen de 10 minutos (xx:00:00, xx:10:00, xx:20:00, etc.)
+// Lógica de programación exacta para el resumen de 1 minuto (cada minuto exacto xx:yy:00)
 function iniciarProgramadorSesiones() {
   const now = new Date();
   const ms = now.getMilliseconds();
   const s = now.getSeconds();
-  const m = now.getMinutes();
 
-  // Calcular los minutos restantes para la siguiente decena exacta
-  const next10Min = Math.ceil((m + 0.1) / 10) * 10;
-  const diffMinutes = next10Min - m;
-  const delayMs = (diffMinutes * 60 * 1000) - (s * 1000) - ms;
+  // Calcular los segundos restantes para el siguiente minuto exacto
+  const delayMs = (60 * 1000) - (s * 1000) - ms;
 
   setTimeout(() => {
     enviarResumenSesiones();
-    setInterval(enviarResumenSesiones, 10 * 60 * 1000);
+    setInterval(enviarResumenSesiones, 1 * 60 * 1000);
   }, delayMs);
 }
 
@@ -104,33 +143,45 @@ async function enviarAvanceGlobal() {
 
     const ambiente = process.env.NODE_ENV || 'desconocido';
     const emoji = AMBIENTE_EMOJI[ambiente] || '⚙️';
+    const barra = barraProgreso(pct, 10);
 
-    const mensaje = `${emoji} *[${ambiente.toUpperCase()}]*\n` +
-      `📈 *Avance Global de Captura - SISECAOD*\n` +
-      `🕐 Reporte cada 2 min\n\n` +
-      `📊 Porcentaje: *${Math.round(pct)}%*\n` +
-      `📦 Total actividades: *${total.toLocaleString()}*\n` +
-      `✅ Capturadas: *${capturadas.toLocaleString()}*\n` +
-      `⏳ Pendientes: *${pendientes.toLocaleString()}*`;
+    const mensaje = `${emoji} <b>[${ambiente.toUpperCase()}]</b>\n` +
+      `📈 <b>Avance Global de Captura - SISECAOD</b>\n` +
+      `🕐 Reporte cada 1 min\n` +
+      `━━━━━━━━━━━━━━━\n\n` +
+      `[${barra}] <b>${Math.round(pct)}%</b>\n\n` +
+      `📦 Total: <b>${total.toLocaleString()}</b>   ✅ Capturadas: <b>${capturadas.toLocaleString()}</b>   ⏳ Pendientes: <b>${pendientes.toLocaleString()}</b>`;
 
     await enviarMensajeTelegram(mensaje);
+    try {
+      const { logger } = require('../config/logger');
+      logger.info('Telegram: Avance global de captura enviado con éxito.');
+    } catch (logErr) {
+      console.log('Telegram: Avance global de captura enviado con éxito.');
+    }
   } catch (err) {
-    console.error('Error enviando avance global a Telegram:', err.message);
+    try {
+      const { logger } = require('../config/logger');
+      logger.error('Error enviando avance global a Telegram: ' + err.message);
+    } catch (logErr) {
+      console.error('Error enviando avance global a Telegram:', err.message);
+    }
   }
 }
 
-// Iniciar el temporizador para enviar avance cada 2 minutos
-setInterval(enviarAvanceGlobal, 2 * 60 * 1000);
+// Iniciar el temporizador para enviar avance cada 1 minuto
+setInterval(enviarAvanceGlobal, 1 * 60 * 1000);
 
 async function enviarAlertaWarn(message) {
   const ambiente = process.env.NODE_ENV || 'desconocido';
   const emoji = AMBIENTE_EMOJI[ambiente] || '⚙️';
   const timestamp = new Date().toISOString().replace('T', ' ').slice(0, 19);
 
-  const mensaje = `${emoji} *[${ambiente.toUpperCase()}]*\n` +
-    `⚠️ *Aviso / Advertencia - SISECAOD*\n` +
-    `🕐 ${timestamp}\n\n` +
-    `${message}`;
+  const mensaje = `${emoji} <b>[${ambiente.toUpperCase()}]</b>\n` +
+    `⚠️ <b>Aviso / Advertencia - SISECAOD</b>\n` +
+    `🕐 ${timestamp}\n` +
+    `━━━━━━━━━━━━━━━\n\n` +
+    `${escapeHtml(message)}`;
 
   await enviarMensajeTelegram(mensaje);
 }
@@ -152,10 +203,11 @@ async function enviarAlertaError(message) {
 
   const timestamp = new Date().toISOString().replace('T', ' ').slice(0, 19);
   
-  const mensaje = `${emoji} *[${ambiente.toUpperCase()}]*\n` +
-    `🔴 *Error de Servidor - SISECAOD*\n` +
-    `🕐 ${timestamp}\n\n` +
-    `${message}`;
+  const mensaje = `${emoji} <b>[${ambiente.toUpperCase()}]</b>\n` +
+    `🚨 <b>ERROR CRÍTICO - SISECAOD</b>\n` +
+    `🕐 ${timestamp}\n` +
+    `━━━━━━━━━━━━━━━\n\n` +
+    `<pre>${escapeHtml(message)}</pre>`;
 
   await enviarMensajeTelegram(mensaje);
 }
@@ -169,10 +221,15 @@ async function enviarMensajeTelegram(text) {
     await axios.post(`https://api.telegram.org/bot${token}/sendMessage`, {
       chat_id: chatId,
       text,
-      parse_mode: 'Markdown'
+      parse_mode: 'HTML'
     });
   } catch (err) {
-    console.error('Error enviando mensaje a Telegram:', err.message);
+    try {
+      const { logger } = require('../config/logger');
+      logger.error('Error enviando mensaje a Telegram: ' + err.message);
+    } catch (logErr) {
+      console.error('Error enviando mensaje a Telegram:', err.message);
+    }
   }
 }
 
@@ -181,5 +238,7 @@ module.exports = {
   enviarAlertaWarn,
   enviarAlertaError,
   enviarResumenSesiones,
-  enviarAvanceGlobal
+  enviarAvanceGlobal,
+  escapeHtml,
+  barraProgreso
 };

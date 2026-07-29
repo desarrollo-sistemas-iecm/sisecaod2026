@@ -21,6 +21,8 @@ const getLocalIp = () => {
 const startServer = async () => {
   try {
     await connectDb()
+    // Inicializar programadores del bot de Telegram
+    require('./services/telegram.service')
     const server = http.createServer(app)
     initSocket(server)
 

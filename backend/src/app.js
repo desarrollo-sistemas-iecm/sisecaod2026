@@ -31,7 +31,9 @@ app.use(cors({
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 200 }))
+if (env.nodeEnv === 'production') {
+  app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 200 }))
+}
 
 app.use('/api/v1', routes)
 

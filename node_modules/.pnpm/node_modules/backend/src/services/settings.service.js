@@ -15,7 +15,10 @@ const getPeriodoActivo = async () => {
 
 const getAniosDisponibles = async () => {
   const result = await query(
-    `SELECT DISTINCT ano FROM sisecao_catactividad ORDER BY ano DESC`
+    `SELECT DISTINCT ano FROM sisecao_catactividad
+     UNION
+     SELECT DISTINCT ano FROM sisecao_actividades_trabajo
+     ORDER BY ano DESC`
   )
   return result.recordset.map(r => r.ano)
 }

@@ -52,7 +52,7 @@ const agregarEncabezadoInstitucional = (ws, titulo, mesNombre, extra = '', colCo
 const generarCentral = async ({ mes, anio, clave, perfil }) => {
   const mesActivo = mes ?? await getMesActivo()
   const mesNombre = MESES_ES[mesActivo] ?? ''
-  const porArea   = perfil === 4 ? ` AND SUBSTRING(A.clave, 4, 2) = @clave` : ''
+  const porArea   = perfil === 4 ? ` AND SUBSTRING(T.clave, 4, 2) = @clave` : ''
   const params    = {
     mes:  { type: sql.Int, value: mesActivo },
     anio: { type: sql.Int, value: anio },
@@ -63,39 +63,96 @@ const generarCentral = async ({ mes, anio, clave, perfil }) => {
     `SELECT T.iddistrito AS distrito, T.clave, A.actividad, A.periodoinicia, A.periodofin,
             A.responsable, A.soporte, A.tipo_actividad, T.realizo, T.tipo,
             T.num_oficio AS oficio, T.descripcion AS detalle
-     FROM sisecao_catactividad A
-     INNER JOIN sisecao_actividades_trabajo T
-       ON A.clave = T.clave AND A.mes = T.mes AND A.ano = T.ano
-     WHERE A.mes = @mes AND A.ano = @anio${porArea}
+     FROM sisecao_actividades_trabajo T
+     LEFT JOIN sisecao_catactividad A
+       ON A.clave = T.clave AND A.ano = T.ano
+     WHERE T.mes = @mes AND T.ano = @anio${porArea}
      ORDER BY T.clave, T.iddistrito`,
     params
   )
 
   const wb = new ExcelJS.Workbook()
   const ws = wb.addWorksheet('Reporte Central')
-  agregarEncabezadoInstitucional(ws, 'REPORTE CENTRAL DE ACTIVIDADES DESARROLLADAS POR LOS ÓRGANOS DESCONCENTRADOS', mesNombre, '', 14)
+  agregarEncabezadoInstitucional(ws, 'REPORTE CENTRAL DE ACTIVIDADES DESARROLLADAS POR LOS ÓRGANOS DESCONCENTRADOS', mesNombre, '', 15)
 
-  const headers = ['DISTRITO', 'ÁREA', 'CONSECUTIVO', 'CLAVE COMPLETA', 'ACTIVIDAD',
-    'PERIODO INICIO', 'PERIODO TÉRMINO', 'RESPONSABLE', 'SOPORTE', 'TIPO ACTIVIDAD',
-    'CUMPLIÓ', 'TIPO DOC / NÚMERO', 'RESUMEN', 'CAUSA NO CUMPLIMIENTO']
+  const headers = [
+    'DISTRITO QUE CAPTURÓ', 'DISTRITO', 'ÁREA', 'CONSECUTIVO', 'CLAVE COMPLETA',
+    'ACTIVIDAD', 'PERIODO DE INICIO', 'PERIODO DE TÉRMINO', 'RESPONSABLE',
+    'SOPORTE DE DOCUMENTO', 'TIPO DE ACTIVIDAD', 'CUMPLIÓ',
+    'ESPECIFICA NÚMERO DE OFICIO, TARJETA, ELECTRÓNICO Y OTRO DOCUMENTO CON EL QUE SE ACREDITA SU CUMPLIMIENTO',
+    'RESUMEN CONCRETO', 'SEÑALA LA CAUSA FALTA QUE NO HUBO CUMPLIMIENTO'
+  ]
   const hRow = ws.addRow(headers)
-  estiloEncabezado(ws, hRow)
+
+  // Cabecera GRIS igual al modelo oficial
+  hRow.eachCell(cell => {
+    cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFCCCCCC' } }
+    cell.font = { name: 'Calibri', bold: true, size: 10, color: { argb: 'FF000000' } }
+    cell.alignment = { vertical: 'middle', horizontal: 'center', wrapText: true }
+    cell.border = {
+      top:    { style: 'thin' },
+      bottom: { style: 'thin' },
+      left:   { style: 'thin' },
+      right:  { style: 'thin' }
+    }
+  })
+  hRow.height = 50
+
+  const formatFecha = (f) => {
+    if (!f) return ''
+    const p = String(f).split('T')[0].split('-')
+    return p.length === 3 ? `${p[2]}/${p[1]}/${p[0]}` : f
+  }
 
   for (const row of result.recordset) {
     const partes = (row.clave ?? '').split('-')
-    ws.addRow([
-      row.distrito, partes[1] ?? '', partes[2] ?? '', row.clave,
-      row.actividad, row.periodoinicia, row.periodofin,
-      row.responsable, row.soporte,
-      TIPOS_ACTIVIDAD[row.tipo_actividad] ?? row.tipo_actividad,
-      row.realizo,
-      `${row.tipo ?? ''} ${row.oficio ?? ''}`.trim(),
-      row.realizo === 'SI' ? row.detalle : '-',
-      row.realizo !== 'SI' ? row.detalle : '-',
+    const r = ws.addRow([
+      row.distrito,           // DISTRITO QUE CAPTURÓ
+      row.distrito,           // DISTRITO
+      partes[1] ?? '',        // ÁREA
+      partes[2] ?? '',        // CONSECUTIVO
+      row.clave,              // CLAVE COMPLETA
+      row.actividad ?? '',    // ACTIVIDAD
+      formatFecha(row.periodoinicia), // PERIODO DE INICIO
+      formatFecha(row.periodofin),    // PERIODO DE TÉRMINO
+      row.responsable ?? '',  // RESPONSABLE
+      row.soporte ?? '',      // SOPORTE DE DOCUMENTO
+      TIPOS_ACTIVIDAD[row.tipo_actividad] ?? row.tipo_actividad ?? '', // TIPO DE ACTIVIDAD
+      row.realizo ?? '',      // CUMPLIÓ
+      `${row.tipo ?? ''} ${row.oficio ?? ''}`.trim(),   // ESPECIFICA NÚMERO...
+      row.realizo === 'SI' ? (row.detalle ?? '-') : '-', // RESUMEN CONCRETO
+      row.realizo !== 'SI' ? (row.detalle ?? '-') : '-', // SEÑALA LA CAUSA...
     ])
+
+    r.eachCell((cell, colNum) => {
+      cell.font = { name: 'Calibri', size: 10 }
+      cell.border = {
+        top:    { style: 'thin' },
+        bottom: { style: 'thin' },
+        left:   { style: 'thin' },
+        right:  { style: 'thin' }
+      }
+      // Columnas de texto largo: wrapText + alineado izquierda
+      if ([6, 9, 10, 13, 14, 15].includes(colNum)) {
+        cell.alignment = { horizontal: 'left', vertical: 'middle', wrapText: true }
+      } else {
+        cell.alignment = { horizontal: 'center', vertical: 'middle', wrapText: true }
+      }
+      // Clave completa como texto
+      if (colNum === 5) cell.numFmt = '@'
+    })
+    r.height = 60
   }
 
-  ws.columns.forEach(col => { col.width = 18 })
+  // Anchos de columna ajustados al modelo
+  const colWidths = [14, 10, 8, 12, 18, 45, 14, 14, 22, 22, 14, 10, 55, 40, 40]
+  colWidths.forEach((w, i) => { ws.getColumn(i + 1).width = w })
+
+  // Filas de encabezado institucional también con buen alto
+  ws.getRow(1).height = 22
+  ws.getRow(2).height = 20
+  ws.getRow(3).height = 18
+
   return wb.xlsx.writeBuffer()
 }
 

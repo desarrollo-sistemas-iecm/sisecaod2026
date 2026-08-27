@@ -20,6 +20,7 @@ const fetchAnios = async () => {
   try {
     const res = await api.get('/settings/anios')
     anios.value = res.data.data || [2026]
+    // Solo si el año actual (2026) no está en la lista, seleccionar el primero disponible
     if (anios.value.length > 0 && !anios.value.includes(anioSelected.value)) {
       anioSelected.value = anios.value[0]
     }
